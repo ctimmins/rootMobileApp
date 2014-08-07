@@ -10,11 +10,13 @@ define(function(require){
 	return Backbone.View.extend({
 
 		initialize: function(){
+			console.log("got to View init");
 			this.render();
 		},
 
 		render: function(){
-			this.$el.html(compiledTemplate);
+			console.log("got to view render");
+			this.$el.html(compiledTemplate());
 		}
 	}); 
 });
