@@ -1,11 +1,13 @@
 /*  js/app.js  */
 
 define(function(require){
+    console.log("got to here");
     var $ = require('jquery');
-    var app = {
-        //global variable indicating device is ready
-        
+    
+    //var HomeView = require('views/HomeView');
+    console.log("got to here 2");
 
+    var app = {  
         // Application Constructor
         initialize: function() {
             this.bindEvents();
@@ -33,8 +35,7 @@ define(function(require){
 
             $('#main_content').css("background", "url(./img/root-background-6.jpg)")    
             
-            
-            //$('#main_content').append('<li>Helloooooo</li>');
+           // var homeView = new HomeView({el: '#main_content'});
 
             console.log('Received Event: ' + id);
         }

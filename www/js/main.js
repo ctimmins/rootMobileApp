@@ -27,6 +27,7 @@ require.config({
 require(['app','jquery','jqm'], function(App, $){
 	//$.mobile.linkBindingEnabled = false;
 	//$.mobile.hashListeningEnabled = false;
+	console.log("got to main init")
 	App.initialize();
 
 })
