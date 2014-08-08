@@ -7,19 +7,30 @@
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, target-densitydpi=device-dpi" />
         
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
         <meta name="msapplication-tap-highlight" content="no" />
         <title>Hello World</title>
     </head>
     <body>
-        <div class="app">
-            <div id="main_content" data-role="page">
-                
-                <div data-role="header"></div>
+        <div data-role="page" id="home" data-theme="b">
 
-                <div id="nav_bar" data-role="footer" data-position="fixed"></div>
-
+            <div data-role="panel" id="navpanel" data-display="overlay" data-position="left">
+                <div data-role="controlgroup" data-corners="false">
+                    <a href="#" class="ui-btn">My Zones</a>
+                    <a href="#" class="ui-btn">Add a Zone</a>
+                    <a href="index.html" class="ui-btn">My Account</a>
+                </div>
             </div>
+
+            <div data-role="header" data-position="fixed">
+                <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-left ui-nodisc-icon">
+                </a>
+            </div>
+
+            <div id="main_content" data-role="main" class="ui-content"></div>
+           
         </div>
+
         <script type="text/javascript" src="cordova.js"></script>
         <script data-main="js/main" src="js/require.js"></script>
         

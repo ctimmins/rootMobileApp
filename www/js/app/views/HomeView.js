@@ -16,7 +16,10 @@ define(function(require){
 
 		render: function(){
 			console.log("got to view render");
-			this.$el.html(compiledTemplate());
-		}
+			this.$el.append(compiledTemplate());
+			$('#main_content').trigger("create");
+			this.$el.on("swipe", function(){console.log("swipe registered");});
+		},
+
 	}); 
 });

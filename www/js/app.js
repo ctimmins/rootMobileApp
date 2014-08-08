@@ -3,35 +3,8 @@
 define(function(require){
     console.log("got to top of app");
     var $ = require('jquery');
-    var Backbone = require('backbone');
-    console.log("imported backbone");
-    var jqm = require('jqm');
-
-
-    
-    var _ = require('underscore'),
-        homeTemplate = require('text!templates/homeTemplate.html');
-
-    var compiledTemplate = _.template(homeTemplate);
-
-    var HomeView = Backbone.View.extend({
-
-        initialize: function(){
-            console.log("got to View init");
-            this.render();
-        },
-
-        render: function(){
-            console.log("got to view render");
-            this.$el.html(compiledTemplate());
-            $('#main_content').trigger("create");
-        }
-    }); 
-
-
-
-
-
+    var HomeView = require('app/views/HomeView');
+    var FastClick = require('fastclick')
 
     var app = {  
         // Application Constructor
@@ -55,16 +28,16 @@ define(function(require){
         // function, we must explicitly call 'app.receivedEvent(...);'
         onDeviceReady: function() {
             console.log("got to onDeviceReady");
+            FastClick.attach(document.body);
             app.receivedEvent('deviceready');
         },
 
         // Update DOM on a Received Event
         receivedEvent: function(id) {
 
-            $('#main_content').css("background", "url(./img/root-background-6.jpg)")    
+            $('[data-role=page]').css("background", "url(./img/root-background-4.jpg)")    
            
-           var homeView = new HomeView({el: '#nav_bar'});
-           //console.log($('#main_content'));
+            var homeView = new HomeView({el: '[data-role=page]'});
             console.log('Received Event: ' + id);
 
             

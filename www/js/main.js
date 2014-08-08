@@ -9,6 +9,7 @@ require.config({
 		jquery: "lib/jquery/jquery-1.10.1",
 		jqm: "lib/jquery/jquery.mobile-1.4.3.min",
 		underscore: "lib/underscore/underscore-1.6.0",
+		fastclick: "lib/fastclick/fastclick-1.0.3",
 		text: "lib/require/text",
 		templates: "../templates"
 	},
