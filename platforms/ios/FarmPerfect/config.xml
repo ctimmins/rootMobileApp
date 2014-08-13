@@ -25,6 +25,8 @@
     <feature name="Console">
         <param name="ios-package" value="CDVLogger" />
     </feature>
+    <access origin="*://10.0.0.129" />
+    <access origin="*://$LIVERELOAD_HOST" />
     <name>FarmPerfect</name>
     <description>
         An Apache Cordova application that responds to database queries.
@@ -34,11 +36,4 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <feature name="File">
-        <param name="onload" value="true" />
-        <param name="ios-package" value="CDVFile" />
-    </feature>
-    <feature name="FileTransfer">
-        <param name="ios-package" value="CDVFileTransfer" />
-    </feature>
 </widget>

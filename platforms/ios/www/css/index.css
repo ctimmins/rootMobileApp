@@ -1,6 +1,21 @@
 #home {
-	background: url('./img/root-background-4.jpg');	
+	background: url('../img/root-background-5.jpg');
+	text-align: center;	
 }
+
+#map {
+	background: url('../img/root-background-2.jpg');
+}
+
+#newzone {
+	background: url('../img/root-background-6.jpg');
+}
+
+h1 {
+	color: #009933;
+	text-shadow: 2px 2px 5px white;
+}
+
 
 .ui-btn-custom-menu {
     background-color: transparent !important;
@@ -18,6 +33,7 @@
 .ui-panel.ui-panel-open {
 	position: absolute;
 }
+
 .ui-panel-inner {
     position: absolute;
     top: 1px;
@@ -28,6 +44,15 @@
     -webkit-overflow-scrolling: touch;
 }
 
-#submit {
-	align: 0 auto;
+#login_buttons {
+    padding: 0px;
+}
+
+#login_buttons .ui-btn {
+    width: 150px;
+}
+
+#main_content {
+    display: inline-block;
+    text-align: center;
 }

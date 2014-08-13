@@ -9,10 +9,5 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <feature name="File">
-        <param name="ios-package" value="CDVFile"/>
-    </feature>
-    <feature name="FileTransfer">
-	<param name="ios-package" value="CDVFileTransfer" />
-    </feature>
+
 </widget>

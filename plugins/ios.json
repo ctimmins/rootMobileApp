@@ -17,11 +17,11 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "xml": "<access origin=\"*://10.0.0.129\" />",
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>",
+                            "xml": "<access origin=\"*://$LIVERELOAD_HOST\" />",
                             "count": 1
                         }
                     ]
@@ -29,15 +29,27 @@
             },
             "framework": {
                 "parents": {
-                    "AssetsLibrary.framework": [
+                    "AssetsLibrary.framework": [],
+                    "MobileCoreServices.framework": []
+                }
+            },
+            "../../plugins/pro.fing.cordova.gapreload/gapreload.xml": {
+                "parents": {
+                    "/*": [
                         {
-                            "xml": "false",
-                            "count": 2
-                        }
-                    ],
-                    "MobileCoreServices.framework": [
+                            "xml": "<param name=\"SERVER_HOST\" value=\"10.0.0.129\" />",
+                            "count": 1
+                        },
                         {
-                            "xml": "false",
+                            "xml": "<param name=\"SERVER_PORT\" value=\"$SERVER_PORT\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<param name=\"LIVERELOAD_HOST\" value=\"$LIVERELOAD_HOST\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<param name=\"LIVERELOAD_PORT\" value=\"$LIVERELOAD_PORT\" />",
                             "count": 1
                         }
                     ]
@@ -52,12 +64,14 @@
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.chadtimmins.mobile"
         },
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "com.chadtimmins.mobile"
-        },
-        "org.apache.cordova.file-transfer": {
+        "pro.fing.cordova.gapreload": {
+            "SERVER_HOST": "10.0.0.129",
             "PACKAGE_NAME": "com.chadtimmins.mobile"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "com.ququplay.websocket.WebSocket": {
+            "PACKAGE_NAME": "com.chadtimmins.mobile"
+        }
+    }
 }
