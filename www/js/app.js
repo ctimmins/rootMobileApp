@@ -1,28 +1,19 @@
 /*  js/app.js  */
-console.log("loaded app.js");     
+console.log("loaded app.js");
+var handler = 'roots.farm/libs/php/manager.php';
+
 $(document).on('ready', function(){
     console.log("deviceready");
 
     $(document).on('mobileinit', function(){
         console.log("jqm has been loaded");
-        //prepend nav panel on each page load
-        $(document).one("pagebeforecreate", function(){
-            $.get('templates/navpanel.html', function(template){
-                var panel = template;
-                $.mobile.pageContainer.prepend(panel);
-                $('#navpanel').panel();
-            });
-        });
-        //log current page and html on each page change
-        $(document).on("pagecontainerbeforeshow", function(event, data){
-            var pageId = $('body').pagecontainer('getActivePage').attr('id');
-            console.log("current page: " + pageId);
-         });
-
+        $.support.cors = true;
         app.renderHomeView();
-    })
-    
-    $('body').append('<script type="text/javascript" src="js/lib/jquery/jquery.mobile-1.4.3.min.js"></script>');
+    });
+
+    //load jquery mobile after 'mobileinit' listener is attached 
+    //$('body').append('<script type="text/javascript" src="js/lib/jquery/jquery.mobile-1.4.3.min.js"></script>');
+    $.getScript("js/lib/jquery/jquery.mobile-1.4.3.min.js")
 
 });
 
@@ -39,7 +30,6 @@ var app = {
         });
         
     },
-
 
     renderMapView: function(){
         console.log("rendering map view");
@@ -95,17 +85,53 @@ var app = {
     }
 };
 
-// $(document).one("pagebeforecreate", function(){
-//     $.get('templates/navpanel.html', function(template){
-//         var panel = template;
-//         $.mobile.pageContainer.prepend(panel);
-//         $('#navpanel').panel();
-//     });
-// });
+    //prepend nav panel on each page load
+    $(document).one("pagecontainerbeforechange", function(){
+        console.log("appending navpanel");
+        $.get('templates/navpanel.html', function(template){
+            var panel = template;
+            $.mobile.pageContainer.prepend(panel);
+            $('#navpanel').panel();
+        });
+    });
 
-//  $(document).on("pagecontainerbeforeshow", function(event, data){
-//     var pageId = $.mobile.activePage.attr('id')
-//     console.log("current page: " + pageId);
-//     console.log("");
-//     console.log($('body').html());
-//  });
+    //log current page and html on each page change
+    $(document).on("pagecontainerbeforeshow", function(event, data){
+        var pageId = $('body').pagecontainer('getActivePage').attr('id');
+        console.log("current page: " + pageId);
+        
+            
+    
+     });
+$('#login').on("click", function(){
+    console.log("login clicked");
+    var  email = $('#email').val();
+    var pass = $('#pass').val();
+    $.ajax({
+            type: "GET",
+            dataType: 'jsonp',
+            crossDomain: true,
+            url: 'http://roots.farm/libs/php/manager.php',
+            data: {Email: email, Password: pass, Mode: 'GetUserDetails'},
+            success: function(returnVal) {
+                console.log("success");
+            }
+        });
+});
+    // //event listeners
+    // var sendUserInfo = function() {
+    //     console.log("login clickeds");
+    //     var  email = $('#email').val();
+    //     var pass = $('#pass').val();
+        
+    //     $.ajax({
+    //         type: "GET",
+    //         dataType: json,
+    //         crossDomain: true,
+    //         url: 'http://roots.farm/libs/php/manager.php',
+    //         data: {Email: email, Password: pass, Mode: 'GetUserDetails'},
+    //         success: function(returnVal) {
+    //             console.log(returnVal);
+    //         }
+    //     });
+    // };

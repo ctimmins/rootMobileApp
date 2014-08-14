@@ -44,6 +44,10 @@ h1 {
     -webkit-overflow-scrolling: touch;
 }
 
+input#email,#pass {
+    margin-bottom: 5px;
+}
+
 #login_buttons {
     padding: 0px;
 }
