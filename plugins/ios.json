@@ -15,14 +15,6 @@
                         {
                             "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<access origin=\"*://10.0.0.129\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<access origin=\"*://$LIVERELOAD_HOST\" />",
-                            "count": 1
                         }
                     ]
                 }
@@ -35,24 +27,7 @@
             },
             "../../plugins/pro.fing.cordova.gapreload/gapreload.xml": {
                 "parents": {
-                    "/*": [
-                        {
-                            "xml": "<param name=\"SERVER_HOST\" value=\"10.0.0.129\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<param name=\"SERVER_PORT\" value=\"$SERVER_PORT\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<param name=\"LIVERELOAD_HOST\" value=\"$LIVERELOAD_HOST\" />",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<param name=\"LIVERELOAD_PORT\" value=\"$LIVERELOAD_PORT\" />",
-                            "count": 1
-                        }
-                    ]
+                    "/*": []
                 }
             }
         }
@@ -63,15 +38,7 @@
         },
         "org.apache.cordova.console": {
             "PACKAGE_NAME": "com.chadtimmins.mobile"
-        },
-        "pro.fing.cordova.gapreload": {
-            "SERVER_HOST": "10.0.0.129",
-            "PACKAGE_NAME": "com.chadtimmins.mobile"
         }
     },
-    "dependent_plugins": {
-        "com.ququplay.websocket.WebSocket": {
-            "PACKAGE_NAME": "com.chadtimmins.mobile"
-        }
-    }
+    "dependent_plugins": {}
 }

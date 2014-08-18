@@ -1,23 +1,59 @@
 /*  js/app.js  */
 console.log("loaded app.js");
-var handler = 'roots.farm/libs/php/manager.php';
+var handler = 'http://roots.farm/libs/php/manager.php';
 
-$(document).on('ready', function(){
+$(document).on('deviceready', function(){
     console.log("deviceready");
 
     $(document).on('mobileinit', function(){
         console.log("jqm has been loaded");
         $.support.cors = true;
-        app.renderHomeView();
+        $.mobile.allowCrossDomainPages = true; 
+        
+        app.initialize();
     });
-
+    
     //load jquery mobile after 'mobileinit' listener is attached 
     //$('body').append('<script type="text/javascript" src="js/lib/jquery/jquery.mobile-1.4.3.min.js"></script>');
-    $.getScript("js/lib/jquery/jquery.mobile-1.4.3.min.js")
+    $.getScript("js/lib/jquery/jquery.mobile-1.4.3.min.js");
+    
 
 });
 
 var app = {
+
+    initialize: function(){
+        
+        //prepend nav panel on each page load
+        $(document).one("pagecontainerbeforechange", function(){
+            console.log("appending navpanel");
+            $.get('templates/navpanel.html', function(template){
+                var panel = template;
+                $.mobile.pageContainer.prepend(panel);
+                $('#navpanel').panel();
+            });
+        });
+
+        //log current page 
+        $(document).on("pagecontainerbeforeshow", function(event, data){
+            var pageId = $('body').pagecontainer('getActivePage').attr('id');
+            console.log("current page: " + pageId);
+        });
+
+        //bind click event to login
+        $('#login').on("click", function(){
+            console.log("login clicked");
+            var  email = $('#email').val();
+            var pass = $('#pass').val();
+            
+            $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
+                console.log(returnVal);
+            });
+        });
+
+
+        this.renderHomeView();    
+    },
 
     renderHomeView: function(){
         console.log("rendering home view");
@@ -85,53 +121,9 @@ var app = {
     }
 };
 
-    //prepend nav panel on each page load
-    $(document).one("pagecontainerbeforechange", function(){
-        console.log("appending navpanel");
-        $.get('templates/navpanel.html', function(template){
-            var panel = template;
-            $.mobile.pageContainer.prepend(panel);
-            $('#navpanel').panel();
-        });
-    });
+    
 
-    //log current page and html on each page change
-    $(document).on("pagecontainerbeforeshow", function(event, data){
-        var pageId = $('body').pagecontainer('getActivePage').attr('id');
-        console.log("current page: " + pageId);
+    
         
             
     
-     });
-$('#login').on("click", function(){
-    console.log("login clicked");
-    var  email = $('#email').val();
-    var pass = $('#pass').val();
-    $.ajax({
-            type: "GET",
-            dataType: 'jsonp',
-            crossDomain: true,
-            url: 'http://roots.farm/libs/php/manager.php',
-            data: {Email: email, Password: pass, Mode: 'GetUserDetails'},
-            success: function(returnVal) {
-                console.log("success");
-            }
-        });
-});
-    // //event listeners
-    // var sendUserInfo = function() {
-    //     console.log("login clickeds");
-    //     var  email = $('#email').val();
-    //     var pass = $('#pass').val();
-        
-    //     $.ajax({
-    //         type: "GET",
-    //         dataType: json,
-    //         crossDomain: true,
-    //         url: 'http://roots.farm/libs/php/manager.php',
-    //         data: {Email: email, Password: pass, Mode: 'GetUserDetails'},
-    //         success: function(returnVal) {
-    //             console.log(returnVal);
-    //         }
-    //     });
-    // };

@@ -20,20 +20,13 @@ module.exports = [
         "clobbers": [
             "cordova.logger"
         ]
-    },
-    {
-        "file": "plugins/pro.fing.cordova.gapreload/gapreload.js",
-        "id": "pro.fing.cordova.gapreload.gapreload",
-        "runs": true
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
     "org.apache.cordova.device": "0.2.10",
-    "org.apache.cordova.console": "0.2.9",
-    "pro.fing.cordova.gapreload": "1.0.1",
-    "com.ququplay.websocket.WebSocket": "0.1.0"
+    "org.apache.cordova.console": "0.2.9"
 }
 // BOTTOM OF METADATA
 });
