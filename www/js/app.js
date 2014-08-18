@@ -1,6 +1,7 @@
 /*  js/app.js  */
 console.log("loaded app.js");
 var handler = 'http://roots.farm/libs/php/manager.php';
+var thisApp;
 
 $(document).on('deviceready', function(){
     console.log("deviceready");
@@ -24,6 +25,8 @@ var app = {
 
     initialize: function(){
         
+        thisApp = this;
+        console.log("this app: " + thisApp);
         //prepend nav panel on each page load
         $(document).one("pagecontainerbeforechange", function(){
             console.log("appending navpanel");
@@ -41,18 +44,13 @@ var app = {
         });
 
         //bind click event to login
-        $('#login').on("click", function(){
-            console.log("login clicked");
+        $('#login_button').on("click", function(){
             var  email = $('#email').val();
             var pass = $('#pass').val();
-            
-            $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
-                console.log(returnVal);
-            });
+            thisApp.login(email, pass);
         });
 
-
-        this.renderHomeView();    
+        thisApp.renderHomeView();    
     },
 
     renderHomeView: function(){
@@ -118,6 +116,61 @@ var app = {
         // function geoError(error){
         //     alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
         // };
+    },
+
+    login: function(email, pass){
+        $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
+            if(returnVal != "Fail"){
+                console.log("Welcome " + returnVal["Name"]);
+                $('#account_button').click(function(){
+                    thisApp.renderAccount(returnVal);
+                });
+            }
+            else
+                console.log("it failed");
+
+            //console.log(thisApp.userData);
+        });    
+    },
+
+    renderAccount: function(userData){
+        $(document).off("pagecontainerbeforeshow").on("pagecontainerbeforeshow", function(event, data){
+            $('#accountsettings_name').val(userData["Name"]);
+            $('#accountsettings_email').val(userData["Email"]);
+            $('#accountsettings_address').val(userData["Address"]);
+            $('#accountsettings_city').val(userData["City"]);
+            $('#accountsettings_state').val(userData["State"]);
+            $('#accountsettings_zip').val(userData["Zip"]);
+            $('#accountsettings_country').val(userData["Country"]);
+            $('#accountsettings_acreage').val(userData["Acreage"]);
+
+            $('#saveAccountDetails').click(function(){
+                    thisApp.updateAccountDetails();
+            });
+        });
+    },
+
+    updateAccountDetails: function(){
+        var out = {
+            Name: $('#accountsettings_name').val(),
+            Address: $('#accountsettings_address').val(),
+            City: $('#accountsettings_city').val(),
+            State: $('#accountsettings_state').val(),
+            Country: $('#accountsettings_country').val(),
+            Zip: $('#accountsettings_zip').val(),
+            Phone: $('#accountsettings_phone').val(),
+            Acreage: $('#accountsettings_acreage').val(),
+            IrrSystem: $('#irrigation_method').val(),
+            WaterSource: $('#water_source').val(),
+            SoilType: $('#soil_type').val(),
+            Mode: 'UpdateUserDetails'
+        };
+
+        console.log(out);
+
+        $.getJSON(handler, out, function(returnVal){
+            console.log("update successful");
+        });
     }
 };
 
