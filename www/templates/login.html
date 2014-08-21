@@ -1,14 +1,19 @@
 <div data-role="page" id="login">
+
     <div data-role="header" data-position="fixed">
         <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-left ui-nodisc-icon">
         </a>
     </div>
 
     <div id="main_content" data-role="main" class="ui-content" data-theme="a">
-        <div class="ui-field-contain">
-            <input type="text" name="email" id="name" value="" placeholder="Email" data-clear-btn="true">
-            <input type="password" name="pass" id="pass" value="" placeholder="Password" data-clear-btn="true"/>
-            <input type="submit" id="submit" value="Login"/>
+
+        <h1>Welcome to Root</h1>
+        <input type="text" name="email" id="email" value="" placeholder="Email" data-clear-btn="true">
+        <input type="password" name="pass" id="pass" value="" placeholder="Password" data-clear-btn="true"/>
+        <div id="login_buttons">
+            <input type="submit" id="login_button" value="Login" data-inline="true"/>
+            <input type="submit" id="new_user_button" value="New User" data-inline="true"/>
         </div>
     </div>
+    
 </div>

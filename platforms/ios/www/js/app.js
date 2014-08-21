@@ -1,6 +1,6 @@
 /*  js/app.js  */
-console.log("loaded app.js");
-var handler = 'http://roots.farm/libs/php/manager.php';
+//console.log("loaded app.js");
+var handler = 'http://farmperfect.com/libs/php/manager.php';
 var thisApp;
 
 $(document).on('deviceready', function(){
@@ -24,18 +24,24 @@ $(document).on('deviceready', function(){
 var app = {
 
     initialize: function(){
-        
         thisApp = this;
-        console.log("this app: " + thisApp);
-        //prepend nav panel on each page load
-        $(document).one("pagecontainerbeforechange", function(){
-            console.log("appending navpanel");
-            $.get('templates/navpanel.html', function(template){
-                var panel = template;
-                $.mobile.pageContainer.prepend(panel);
-                $('#navpanel').panel();
+        
+        //retrieve user credentials from local storage and try login
+        var email = window.localStorage.getItem("Email");
+        var pass = window.localStorage.getItem("Password");
+        if(email != null && pass != null) {
+            thisApp.login(email, pass);
+        }
+        else{
+            //show login screen
+            $(':mobile-pagecontainer').pagecontainer("change", "templates/login.html");
+            //bind event to login button
+            $('#login_button').on("click", function(){
+                    var  email = $('#email').val();
+                    var pass = $('#pass').val();
+                    thisApp.login(email, pass);
             });
-        });
+        }
 
         //log current page 
         $(document).on("pagecontainerbeforeshow", function(event, data){
@@ -43,14 +49,47 @@ var app = {
             console.log("current page: " + pageId);
         });
 
-        //bind click event to login
-        $('#login_button').on("click", function(){
-            var  email = $('#email').val();
-            var pass = $('#pass').val();
-            thisApp.login(email, pass);
-        });
+       
+  
+    },
 
-        thisApp.renderHomeView();    
+    login: function(email, pass){
+        $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
+            if(returnVal != "Fail"){
+                //store user credentials upon successful login
+                window.localStorage.setItem("Email", email);
+                window.localStorage.setItem("Password", pass);
+                
+                //prepend nav panel on each page load.  only triggered once
+                $(document).one("pagecontainerbeforechange", function(e, ui){
+                    console.log("appending navpanel");
+                    $.get('templates/navpanel.html', function(template){
+                        var panel = template;
+                        $.mobile.pageContainer.prepend(panel);
+                        $('#navpanel').panel();
+                        //bind renderAccount event to account_button
+                        $('#account_button').click(function(){
+                            thisApp.renderAccount(returnVal);
+                        });
+                    });
+
+                });
+                
+                //change page to dashboard
+                $(':mobile-pagecontainer').pagecontainer("change", "templates/dashboard.html");
+
+
+            }
+            else{
+                $(':mobile-pagecontainer').pagecontainer("change", "templates/login.html");
+                 //bind click event to login
+                $('#login_button').on("click", function(){
+                    var  email = $('#email').val();
+                    var pass = $('#pass').val();
+                    thisApp.login(email, pass);
+                });
+            }
+        });    
     },
 
     renderHomeView: function(){
@@ -118,23 +157,26 @@ var app = {
         // };
     },
 
-    login: function(email, pass){
-        $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
-            if(returnVal != "Fail"){
-                console.log("Welcome " + returnVal["Name"]);
-                $('#account_button').click(function(){
-                    thisApp.renderAccount(returnVal);
-                });
-            }
-            else
-                console.log("it failed");
+    isLoggedIn: function(){
+        //retrieve stored user credentials
+        var email = window.localStorage.getItem("Email");
+        var pass = window.localStorage.getItem("Password");
+        console.log("executing isLoggedIn");
+        console.log("Email: " + email);
+        console.log("Password: " + pass);
+        var isLoggedIn = false;
 
-            //console.log(thisApp.userData);
-        });    
+        $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
+            if(returnVal != "Fail")
+                console.log("should be logged in");
+                isLoggedIn = true;
+        });
+
+        return isLoggedIn;
     },
 
     renderAccount: function(userData){
-        $(document).off("pagecontainerbeforeshow").on("pagecontainerbeforeshow", function(event, data){
+        $(document).off("pagecontainerbeforeshow").one("pagecontainerbeforeshow", function(event, data){
             $('#accountsettings_name').val(userData["Name"]);
             $('#accountsettings_email').val(userData["Email"]);
             $('#accountsettings_address').val(userData["Address"]);
