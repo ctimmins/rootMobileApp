@@ -1,5 +1,5 @@
 /*  js/app.js  */
-//console.log("loaded app.js");
+
 var handler = 'http://farmperfect.com/libs/php/manager.php';
 var thisApp;
 
@@ -25,158 +25,98 @@ var app = {
 
     initialize: function(){
         thisApp = this;
-        
-        //retrieve user credentials from local storage and try login
-        var email = window.localStorage.getItem("Email");
-        var pass = window.localStorage.getItem("Password");
-        if(email != null && pass != null) {
-            thisApp.login(email, pass);
-        }
-        else{
-            //show login screen
-            $(':mobile-pagecontainer').pagecontainer("change", "templates/login.html");
-            //bind event to login button
-            $('#login_button').on("click", function(){
-                    var  email = $('#email').val();
-                    var pass = $('#pass').val();
-                    thisApp.login(email, pass);
-            });
-        }
 
-        //log current page 
-        $(document).on("pagecontainerbeforeshow", function(event, data){
-            var pageId = $('body').pagecontainer('getActivePage').attr('id');
-            console.log("current page: " + pageId);
+        //prepend nav panel and try login.  only triggered once
+        $(document).one("pagecontainerbeforechange", function(e, ui){
+            $.get('templates/navpanel.html', function(template){
+                console.log("appending navpanel");
+                var panel = template;
+                $.mobile.pageContainer.prepend(panel);
+                $('#navpanel').panel();
+            });
+
+            //retrieve user credentials from local storage and try login
+            var email = window.localStorage.getItem("Email");
+            var pass = window.localStorage.getItem("Password");
+            console.log("email: " + email);
+            console.log("password: " + pass);
+            if(email != null && pass != null) {
+                thisApp.login(email, pass);
+            }
+            else{
+                thisApp.logout();
+            }
+            e.preventDefault();
+            console.log(thisApp.userData);
         });
 
-       
-  
+        $(document).on("pagecontainerbeforeshow", function(e, ui){
+            console.log("current page: " + ui.toPage.attr('id'));
+        })
+
+        $(document).on('pagebeforecreate', '#dashboard', function(event, ui){
+            console.log("pagebeforecreate for dashboard");
+        });
+
+
+        $(document).on('pagebeforecreate', '#login', function(event, ui){
+            console.log("creating login page");
+
+            $('#login_button').on("touchstart", function(){
+                console.log("login clicked");
+                var  email = $('#email').val();
+                var pass = $('#pass').val();
+                console.log("email: " + email);
+                console.log("pw: " + pass);
+                thisApp.login(email, pass);
+            });
+        
+        });
+
+        // $(document).on('pagebeforecreate', '#account', function(event, ui){
+        //     console.log("showing account");
+        //     //thisApp.renderAccount(returnVal);
+        //     $('#account_button').click(function(){
+        //         thisApp.renderAccount(returnVal);
+        //     });
+        //     $('#logout_button').click(function(){
+        //         thisApp.logout();
+        //     });
+        // });      
     },
 
     login: function(email, pass){
+        console.log("trying to login");
         $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
+            console.log("request returned");
             if(returnVal != "Fail"){
                 //store user credentials upon successful login
                 window.localStorage.setItem("Email", email);
                 window.localStorage.setItem("Password", pass);
                 
-                //prepend nav panel on each page load.  only triggered once
-                $(document).one("pagecontainerbeforechange", function(e, ui){
-                    console.log("appending navpanel");
-                    $.get('templates/navpanel.html', function(template){
-                        var panel = template;
-                        $.mobile.pageContainer.prepend(panel);
-                        $('#navpanel').panel();
-                        //bind renderAccount event to account_button
-                        $('#account_button').click(function(){
-                            thisApp.renderAccount(returnVal);
-                        });
-                    });
-
-                });
-                
-                //change page to dashboard
-                $(':mobile-pagecontainer').pagecontainer("change", "templates/dashboard.html");
+                //initialize account
+                account.initialize();
+                //change page to dashboard                
+                $('body').pagecontainer("change", "#dashboard", {allowSamePageTransition: true});
 
 
             }
             else{
-                $(':mobile-pagecontainer').pagecontainer("change", "templates/login.html");
-                 //bind click event to login
-                $('#login_button').on("click", function(){
-                    var  email = $('#email').val();
-                    var pass = $('#pass').val();
-                    thisApp.login(email, pass);
-                });
+                thisApp.logout();
             }
         });    
     },
 
     renderHomeView: function(){
-        console.log("rendering home view");
-        $(document).ready(function(){
-            // $.get('templates/homeTemplate.html', function(template){
-            //     //$('#home').css("background", "url(./img/root-background-4.jpg)")
-            //     $('#home').html(template).trigger("create");
-            // });        
-
-        });
-        
+        console.log("rendering home view");        
     },
 
     renderMapView: function(){
         console.log("rendering map view");
-
-        // function onMapLoad() { 
-        //     console.log("got to onLoad");
-        //     if (1) {
-        //         // load the google api
-        //         var fileref=document.createElement('script'); 
-        //         fileref.setAttribute("type","text/javascript"); 
-        //         fileref.setAttribute("src",
-        //             "http://maps.googleapis.com/maps/api/js?sensor=true&callback=" + "getGeolocation");
-        //         document.getElementsByTagName("head")[0]. appendChild(fileref);
-        //     } 
-        //     else {
-        //         alert("Must be connected to the Internet");
-        //     } 
-        // };
-
-        // function getGeolocation() {
-        //     // get the user's gps coordinates and display map
-        //     console.log("got to getGeolocation"); 
-        //     var options = {
-        //         maximumAge: 3000, 
-        //         timeout: 5000, 
-        //         enableHighAccuracy: true
-        //     }; 
-        //     navigator.geolocation.getCurrentPosition(loadMap, geoError, options);
-        // };
-
-        // function loadMap(position) {
-        //     console.log("got to loadMap");
-        //     var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        //     var myOptions = { 
-        //         zoom: 8,
-        //         center: latlng,
-        //         mapTypeId: google.maps.MapTypeId.ROADMAP
-        //     };
-        //     var mapObj = $('#map_canvas');
-        //     var map = new google.maps.Map(mapObj[0], myOptions);
-
-        //     var marker = new google.maps.Marker({
-        //         position: latlng,
-        //         map: map,
-        //         title: "You"
-        //     });
-                
-        // };
-
-        // function geoError(error){
-        //     alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
-        // };
-    },
-
-    isLoggedIn: function(){
-        //retrieve stored user credentials
-        var email = window.localStorage.getItem("Email");
-        var pass = window.localStorage.getItem("Password");
-        console.log("executing isLoggedIn");
-        console.log("Email: " + email);
-        console.log("Password: " + pass);
-        var isLoggedIn = false;
-
-        $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
-            if(returnVal != "Fail")
-                console.log("should be logged in");
-                isLoggedIn = true;
-        });
-
-        return isLoggedIn;
     },
 
     renderAccount: function(userData){
-        $(document).off("pagecontainerbeforeshow").one("pagecontainerbeforeshow", function(event, data){
+        $(document).off("pagecontainerbeforeshow").on("pagecontainerbeforeshow", function(event, data){
             $('#accountsettings_name').val(userData["Name"]);
             $('#accountsettings_email').val(userData["Email"]);
             $('#accountsettings_address').val(userData["Address"]);
@@ -186,8 +126,11 @@ var app = {
             $('#accountsettings_country').val(userData["Country"]);
             $('#accountsettings_acreage').val(userData["Acreage"]);
 
+            $('#logout_button').click(function(){
+                thisApp.logout();
+            });
             $('#saveAccountDetails').click(function(){
-                    thisApp.updateAccountDetails();
+                thisApp.updateAccountDetails();
             });
         });
     },
@@ -208,13 +151,31 @@ var app = {
             Mode: 'UpdateUserDetails'
         };
 
-        console.log(out);
-
         $.getJSON(handler, out, function(returnVal){
             console.log("update successful");
         });
+    },
+
+    logout: function(){
+        $('body').pagecontainer("change", "#login", {allowSamePageTransition: true});
+        console.log("logging out");
+        //clear user credentials
+        window.localStorage.clear();
+        //show login screen
+        
+        
+        //$('body').pagecontainer("change");
+        //$(document).trigger('createpage');
+       
+    },
+
+    userData: {
+        Name: "chad",
+        address: "123 yes lane"
     }
 };
+
+
 
     
 
