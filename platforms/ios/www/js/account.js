@@ -14,8 +14,7 @@ var account = {
 
 			$('#saveAccountDetails').on("touchstart", function(){
 				account.updateAccount();
-			});
-			
+			});		
 		});
 	},
 
@@ -57,9 +56,6 @@ var account = {
         $.getJSON(handler, out, function(returnVal){
             console.log("update " + returnVal);
             if(returnVal == "Success"){
-            	//var email = window.localStorage.getItem("Email");
-	        	//var pass = window.localStorage.getItem("Password");
-				//app.login(email, pass);
 				app.userData["Name"] = $('#accountsettings_name').val();
 				app.userData["Email"] = $('#accountsettings_email').val();
 				app.userData["Phone"] = $('#accountsettings_phone').val();

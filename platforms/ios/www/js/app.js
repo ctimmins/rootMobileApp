@@ -55,11 +55,7 @@ var app = {
             app.currentPage = ui.toPage.attr('id');
         })
 
-        $(document).on('pagebeforecreate', '#dashboard', function(event, ui){
-            console.log("pagebeforecreate for dashboard");
-        });
-
-
+        //bind login events
         $(document).on('pagebeforecreate', '#login', function(event, ui){
             console.log("creating login page");
 
@@ -70,6 +66,12 @@ var app = {
                 app.login(email, pass);
             });
         
+        });
+
+        //bind dashboard events
+        $(document).on("pagebeforecreate", "#dashboard", function(event, ui){
+            //populate dashboard 
+            dashboard.loadZones(app.userData["Zones"]);
         });      
     },
 
@@ -93,8 +95,6 @@ var app = {
                 //     $('body').pagecontainer("change", "#dashboard", {allowSamePageTransition: true});     
                 // }                
                 $('body').pagecontainer("change", "#dashboard", {allowSamePageTransition: true});     
-
-
             }
             else{
                 app.logout();
