@@ -6,8 +6,8 @@ var dashboard = {
 				console.log("Crop: " + returnVal["Crop"]);
 				
 				//populate page with zone data
-			    $('#dashboard').append(
-			        "<div data-role='collapsible' data-mini='true'>" + 
+			    $('#dash_content').append(
+			        "<div class='ui-content ui-custom-zone'>" + 
 			            "<h2>" + returnVal["Name"] + "</h2>" +
 			            "<p>" + returnVal["Crop"] + "</p>" +
 			        "</div>"

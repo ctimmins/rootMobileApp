@@ -15,6 +15,18 @@
                         {
                             "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Accelerometer\"><param name=\"ios-package\" value=\"CDVAccelerometer\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Compass\"><param name=\"ios-package\" value=\"CDVCompass\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -22,7 +34,19 @@
             "framework": {
                 "parents": {
                     "AssetsLibrary.framework": [],
-                    "MobileCoreServices.framework": []
+                    "MobileCoreServices.framework": [],
+                    "CoreLocation.framework": [
+                        {
+                            "xml": "false",
+                            "count": 2
+                        }
+                    ],
+                    "CoreMotion.framework": [
+                        {
+                            "xml": "false",
+                            "count": 1
+                        }
+                    ]
                 }
             },
             "../../plugins/pro.fing.cordova.gapreload/gapreload.xml": {
@@ -37,6 +61,15 @@
             "PACKAGE_NAME": "com.chadtimmins.mobile"
         },
         "org.apache.cordova.console": {
+            "PACKAGE_NAME": "com.chadtimmins.mobile"
+        },
+        "org.apache.cordova.device-motion": {
+            "PACKAGE_NAME": "com.chadtimmins.mobile"
+        },
+        "org.apache.cordova.device-orientation": {
+            "PACKAGE_NAME": "com.chadtimmins.mobile"
+        },
+        "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "com.chadtimmins.mobile"
         }
     },

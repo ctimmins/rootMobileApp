@@ -72,7 +72,13 @@ var app = {
         $(document).on("pagebeforecreate", "#dashboard", function(event, ui){
             //populate dashboard 
             dashboard.loadZones(app.userData["Zones"]);
-        });      
+        });
+
+        //bind map events
+        $(document).on("pagebeforecreate", '#map', function(event, ui){
+            //map.getCurrentLocation();
+            map.onSuccess();
+        })      
     },
 
     login: function(email, pass){

@@ -40,6 +40,10 @@
 		D1589D835336428AAA3A94C6 /* CDVDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = A3AE57DE2F2D4AB88A60AD0E /* CDVDevice.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		D7069D826DC042A9A37B4EF6 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 2618FE3E98064904B997F429 /* CDVLogger.m */; };
+		9EA7CAE4DD3A4B948DCE8D3B /* CDVAccelerometer.m in Sources */ = {isa = PBXBuildFile; fileRef = 774191479AE2406487029BBD /* CDVAccelerometer.m */; };
+		4851B6E08ADE4C54A22CB02B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC38D0849E264D11BB0C60A8 /* CoreMotion.framework */; };
+		EFF01D8671054E86B56F7194 /* CDVCompass.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B3A114003D47A2A65FC115 /* CDVCompass.m */; };
+		21694CCD49F54F3396646557 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 53CB6E64A7A540B0BF3AEEE8 /* CDVLocation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +112,13 @@
 		EE7CC9ED88AC491BBEE1BC1D /* CDVDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVDevice.h; path = org.apache.cordova.device/CDVDevice.h; sourceTree = "<group>"; };
 		F01E6257FEEF40AE94C59FCD /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.console/CDVLogger.h; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = FarmPerfect/config.xml; sourceTree = "<group>"; };
+		774191479AE2406487029BBD /* CDVAccelerometer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVAccelerometer.m"; path = "org.apache.cordova.device-motion/CDVAccelerometer.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		4389C3E0E26742F7A85C0E45 /* CDVAccelerometer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVAccelerometer.h"; path = "org.apache.cordova.device-motion/CDVAccelerometer.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		DC38D0849E264D11BB0C60A8 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "CoreMotion.framework"; path = "System/Library/Frameworks/CoreMotion.framework"; sourceTree = SDKROOT; fileEncoding = 4; };
+		31B3A114003D47A2A65FC115 /* CDVCompass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVCompass.m"; path = "org.apache.cordova.device-orientation/CDVCompass.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		AE33B87E539C4CF0AC7B7027 /* CDVCompass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVCompass.h"; path = "org.apache.cordova.device-orientation/CDVCompass.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		53CB6E64A7A540B0BF3AEEE8 /* CDVLocation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVLocation.m"; path = "org.apache.cordova.geolocation/CDVLocation.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		E19559F215264E8EBF7E5BF6 /* CDVLocation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVLocation.h"; path = "org.apache.cordova.geolocation/CDVLocation.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +131,7 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */,
+				4851B6E08ADE4C54A22CB02B /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +225,7 @@
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
+				DC38D0849E264D11BB0C60A8 /* CoreMotion.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -232,6 +245,12 @@
 				EE7CC9ED88AC491BBEE1BC1D /* CDVDevice.h */,
 				2618FE3E98064904B997F429 /* CDVLogger.m */,
 				F01E6257FEEF40AE94C59FCD /* CDVLogger.h */,
+				774191479AE2406487029BBD /* CDVAccelerometer.m */,
+				4389C3E0E26742F7A85C0E45 /* CDVAccelerometer.h */,
+				31B3A114003D47A2A65FC115 /* CDVCompass.m */,
+				AE33B87E539C4CF0AC7B7027 /* CDVCompass.h */,
+				53CB6E64A7A540B0BF3AEEE8 /* CDVLocation.m */,
+				E19559F215264E8EBF7E5BF6 /* CDVLocation.h */,
 			);
 			name = Plugins;
 			path = FarmPerfect/Plugins;
@@ -428,6 +447,9 @@
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				D1589D835336428AAA3A94C6 /* CDVDevice.m in Sources */,
 				D7069D826DC042A9A37B4EF6 /* CDVLogger.m in Sources */,
+				9EA7CAE4DD3A4B948DCE8D3B /* CDVAccelerometer.m in Sources */,
+				EFF01D8671054E86B56F7194 /* CDVCompass.m in Sources */,
+				21694CCD49F54F3396646557 /* CDVLocation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
