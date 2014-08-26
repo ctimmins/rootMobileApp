@@ -8,6 +8,8 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+        
         
         <title>Hello Worlds</title>
     </head>
@@ -35,14 +37,16 @@
     
             <div data-role="header" data-position="fixed" data-theme="b">
                 <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-left ui-nodisc-icon"></a>
-                <div id="blur_top" class="ui-content"></div>
+                <h1>Dashboard</h1>
+                
             </div>
 
             <div id="dash_content" data-role="main" class="ui-content" data-theme="a">
-                <div id="zone1" class="ui-content ui-custom-zone"></div>
-                <div id="zone2" class="ui-content ui-custom-zone"></div>
-                <div id="zone3" class="ui-content ui-custom-zone"></div>
-                <div id="zone4" class="ui-content ui-custom-zone"></div>
+                <div id="zone1" data-role="collapsible" class="ui-content ui-custom-zone  ui-corner-all">
+                    <h1>Im a collapsible</h1>
+                </div>
+                <div id="zone2" class="ui-content ui-custom-zone  ui-corner-all"></div>
+                <div id="zone3" class="ui-content ui-custom-zone  ui-corner-all"></div>
             </div>
 
         </div>
@@ -50,7 +54,7 @@
 
         <script type="text/javascript" src="js/lib/jquery/jquery-1.10.1.js"></script>
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUsjoIQeImuEz301sxAWu6pQ8hnhNBW0g"></script>
+        
         <script type="text/javascript" src="js/app.js"></script>
         <script type="text/javascript" src="js/account.js"></script>
         <script type="text/javascript" src="js/dashboard.js"></script>

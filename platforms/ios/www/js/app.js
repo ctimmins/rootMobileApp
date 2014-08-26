@@ -28,6 +28,16 @@ var app = {
 
         //prepend nav panel and try login.  only triggered once
         $(document).one("pagecontainerbeforechange", function(e, ui){
+            var s = document.createElement("script");
+            s.type = "text/javascript";
+            s.src  = "http://maps.google.com/maps/api/js?v=3&sensor=true&callback=gmap_draw";
+            window.gmap_draw = function(){
+                //map.getCurrentLocation();
+                //map.onSuccess(pos);
+                console.log("maps script loaded");
+            };
+            $("head").append(s);
+
             $.get('templates/navpanel.html', function(template){
                 console.log("appending navpanel");
                 var panel = template;
@@ -71,6 +81,7 @@ var app = {
         //bind dashboard events
         $(document).on("pagebeforecreate", "#dashboard", function(event, ui){
             //populate dashboard 
+            //$(document).on("scrollstart", '.zone-body', false);
             dashboard.loadZones(app.userData["Zones"]);
         });
 
