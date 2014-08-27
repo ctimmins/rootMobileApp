@@ -11,10 +11,10 @@
 * run command:  "cordova create [folder_name] com.your_name.[folder_name] [project_name]"
 * replace new project's www file with the one in root-mobile
 * Plugins: 
-⋅⋅* cordova plugin add org.apache.cordova.console 
-⋅⋅* cordova plugin add org.apache.cordova.device 
-⋅⋅* cordova plugin add org.apache.cordova.device-motion 
-⋅⋅* cordova plugin add org.apache.cordova.device-orientation 
-⋅⋅* cordova plugin add org.apache.cordova.geolocation
+  * cordova plugin add org.apache.cordova.console 
+  * cordova plugin add org.apache.cordova.device 
+  * cordova plugin add org.apache.cordova.device-motion 
+  * cordova plugin add org.apache.cordova.device-orientation 
+  * cordova plugin add org.apache.cordova.geolocation
 
 * removal of plugins:  cd to project root.  "cordova plugin rm plugin_name"
