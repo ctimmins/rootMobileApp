@@ -16,6 +16,10 @@
     background: url('../img/root-background-6.jpg');
 }
 
+#account_content {
+    background: url('../img/root-background-4.jpg');
+}
+
 #blur_top{
     background-color: rgba(0,0,0,.4) !important;
     -webkit-filter: blur(5px);
@@ -66,8 +70,18 @@ input#email,#pass {
     padding: 0px;
 }
 
+#account_buttons {
+    padding: 0px;
+}
+
 #login_buttons .ui-btn {
     width: 150px;
+    color: #F4F4F4;
+    background:#00A480;
+    border: 0px;
+}
+
+#account_buttons .ui-btn {
     color: #F4F4F4;
     background:#00A480;
     border: 0px;
@@ -110,4 +124,13 @@ input#email,#pass {
     z-index: -1;
 }
 
+#my_account_btn {
+    margin: 0px; 
+    border: 0px;
+    padding: 0px;    
+}
+
+#account_content {
+    display: none;
+}
 

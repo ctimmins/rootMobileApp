@@ -30,11 +30,8 @@ var account = {
         $('#accountsettings_country').val(userData["Country"]);
         $('#accountsettings_acreage').val(userData["Acreage"]);
         $('select#water_source').val(userData["Water Source"]);
-        //$('select#water_source').selectmenu('refresh');
         $('select#irrigation_method').val(userData["Irrigation System"]);
-        //$('select#irrigation_method').selectmenu('refresh');
         $('select#soil_type').val(userData["Soil Type"]);
-        //$('select#soil_type').selectmenu('refresh');
 	},
 
 	updateAccount: function(){
@@ -54,7 +51,6 @@ var account = {
         };
 
         $.getJSON(handler, out, function(returnVal){
-            console.log("update " + returnVal);
             if(returnVal == "Success"){
 				app.userData["Name"] = $('#accountsettings_name').val();
 				app.userData["Email"] = $('#accountsettings_email').val();
@@ -68,6 +64,8 @@ var account = {
 				app.userData["Water Source"] = $('#water_source').val();
 				app.userData["Irrigation System"] = $('#irrigation_method').val();
             	app.userData["Soil Type"] = $('select#soil_type').val();
+                console.log("update successful");
+                alert("Account Updated");
             }
         });
 	}

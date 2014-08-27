@@ -1,7 +1,7 @@
 /*  js/app.js  */
 
-var handler = 'http://farmperfect.com/libs/php/manager.php';
-
+//var handler = 'http://farmperfect.com/libs/php/manager.php';
+var handler = 'http://54.186.32.104/libs/php/manager.php';
 
 $(document).on('deviceready', function(){
     console.log("deviceready");
@@ -59,15 +59,43 @@ var app = {
             e.preventDefault();
             console.log(app.userData);
         });
+        
+        //bind panel events
+        $(document).on("panelbeforeopen", function(e, ui){
+            //populate account details and refresh view
+            account.renderAccount(app.userData);
+            $('#navpanel').trigger('updatelayout');
+            $(document).trigger("create");
+
+            //save account details if save is pressed
+            $('#saveAccountDetails').on("touchstart", function(){
+                account.updateAccount();
+            });
+
+            //toggle account display
+            $('#my_account_btn').on("touchstart", function(){
+                $('#account_content').toggle();
+            });
+        });
+
+        //unbind panel events
+        $(document).on("panelbeforeclose", function(e, ui){
+            $('#saveAccountDetails').off();
+            $('#my_account_btn').off();
+        });
 
         $(document).on("pagecontainerbeforeshow", function(e, ui){
             console.log("current page: " + ui.toPage.attr('id'));
             app.currentPage = ui.toPage.attr('id');
-        })
+        });
 
         //bind login events
         $(document).on('pagebeforecreate', '#login', function(event, ui){
             console.log("creating login page");
+            //clear user credentials
+            window.localStorage.clear();
+            app.userData = null;
+
 
             $('#login_button').on("touchstart", function(){
                 console.log("login clicked");
@@ -103,15 +131,8 @@ var app = {
                 //store userData on successful login
                 app.userData = returnVal
                 //initialize account
-                account.initialize();
-                //change page to dashboard
-                // if(app.currentPage == "account"){
-                //     $('body').pagecontainer("change", "templates/account.html", {allowSamePageTransition: true});       
-                // }
-                // else{
-                //     $('body').pagecontainer("change", "#dashboard", {allowSamePageTransition: true});     
-                // }                
-                $('body').pagecontainer("change", "#dashboard", {allowSamePageTransition: true});     
+                account.initialize();                
+                $('body').pagecontainer("change", "#dashboard");     
             }
             else{
                 app.logout();
@@ -128,7 +149,7 @@ var app = {
     },
 
     logout: function(){
-        $('body').pagecontainer("change", "#login", {allowSamePageTransition: true});
+        $('body').pagecontainer("change", "#login");
         console.log("logging out");
         //clear user credentials
         window.localStorage.clear();
