@@ -125,9 +125,7 @@ input#email,#pass {
 }
 
 #my_account_btn {
-    margin: 0px; 
-    border: 0px;
-    padding: 0px;    
+    margin: 0px;    
 }
 
 #account_content {

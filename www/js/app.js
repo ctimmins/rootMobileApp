@@ -74,28 +74,46 @@ var app = {
 
             //toggle account display
             $('#my_account_btn').on("touchstart", function(){
-                $('#account_content').toggle();
+                // $('#account_content').toggle();
+                if($('#account_content').is(':hidden'))
+                    $('#account_content').slideDown(400);
+                else
+                    $('#account_content').slideUp(300);
             });
         });
 
-        //unbind panel events
+        //unbind panel events and close account details
         $(document).on("panelbeforeclose", function(e, ui){
             $('#saveAccountDetails').off();
             $('#my_account_btn').off();
+            $('#account_content').hide();
+            $('#navpanel').trigger('updatelayout');
         });
 
         $(document).on("pagecontainerbeforeshow", function(e, ui){
-            console.log("current page: " + ui.toPage.attr('id'));
+            
             app.currentPage = ui.toPage.attr('id');
+
+            switch(app.currentPage){
+                case "login":
+                    //clear user credentials
+                    window.localStorage.clear();
+                    app.userData = null;
+                    //$('#login_button').val('');
+                    $('#pass').val('');
+                    break;
+                case "dashboard":
+                    dashboard.loadZones(app.userData["Zones"]);
+                    break;
+                default:
+                    console.log("current page: " + ui.toPage.attr('id'));
+                    break;
+            }
         });
 
         //bind login events
         $(document).on('pagebeforecreate', '#login', function(event, ui){
             console.log("creating login page");
-            //clear user credentials
-            window.localStorage.clear();
-            app.userData = null;
-
 
             $('#login_button').on("touchstart", function(){
                 console.log("login clicked");
@@ -110,7 +128,7 @@ var app = {
         $(document).on("pagebeforecreate", "#dashboard", function(event, ui){
             //populate dashboard 
             //$(document).on("scrollstart", '.zone-body', false);
-            dashboard.loadZones(app.userData["Zones"]);
+            //dashboard.loadZones(app.userData["Zones"]);
         });
 
         //bind map events
