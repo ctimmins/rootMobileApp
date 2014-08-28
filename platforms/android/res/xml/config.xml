@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.rootsystems.mobile" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <preference name="loglevel" value="DEBUG" />
+    <preference name="AndroidLaunchMode" value="singleTop" />
+    <feature name="App">
+        <param name="android-package" value="org.apache.cordova.App" />
+    </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="Accelerometer">
+        <param name="android-package" value="org.apache.cordova.devicemotion.AccelListener" />
+    </feature>
+    <feature name="Compass">
+        <param name="android-package" value="org.apache.cordova.deviceorientation.CompassListener" />
+    </feature>
+    <name>rooT</name>
+    <description>
+        rooT Mobile App - Afordable Crop Monitoring Platfrom for Growers.
+    </description>
+    <author email="info@project-root.com" href="http://roots.farm">
+        rooT Systems Team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>

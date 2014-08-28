@@ -8,7 +8,6 @@ var dashboard = {
 				//populate page with zone data
 			    $('#dash_content').append(
 			        "<div class='ui-content ui-custom-zone ui-corner-all'>" + 
-			            
 			            "<div class='zone-body'>" +
 				            "<div class='zone-heading'>" +
 					            returnVal["Name"] +
@@ -18,6 +17,10 @@ var dashboard = {
 			        "</div>"
 			        )
 			    $('#dashboard').trigger('create');
+                //Debugging - allows android to be debugged in chrome, but seems to break javascript (so uncomment to check DOM and things like that)
+                //if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                //  WebView.setWebContentsDebuggingEnabled(true);
+                //}
 			});
 		});
 	}

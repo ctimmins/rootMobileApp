@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.chadtimmins.mobile" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>FarmPerfect</name>
+<widget id="com.rootsystems.mobile" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>rooT</name>
     <description>
-        An Apache Cordova application that responds to database queries.
+        rooT Mobile App - Afordable Crop Monitoring Platfrom for Growers.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="info@project-root.com" href="http://roots.farm">
+        rooT Systems Team
     </author>
     <content src="index.html" />
     <access origin="*" />
