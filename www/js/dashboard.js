@@ -17,10 +17,6 @@ var dashboard = {
 			        "</div>"
 			        )
 			    $('#dashboard').trigger('create');
-                //Debugging - allows android to be debugged in chrome, but seems to break javascript (so uncomment to check DOM and things like that)
-                //if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                //  WebView.setWebContentsDebuggingEnabled(true);
-                //}
 			});
 		});
 	}

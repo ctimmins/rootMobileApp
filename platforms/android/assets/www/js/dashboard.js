@@ -17,9 +17,6 @@ var dashboard = {
 			        "</div>"
 			        )
 			    $('#dashboard').trigger('create');
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-          WebView.setWebContentsDebuggingEnabled(true);
-        }
 			});
 		});
 	}
