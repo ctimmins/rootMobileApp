@@ -8,14 +8,16 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-
-        
-        
-        <title>Hello Worlds</title>
+        <title>rooT Mobile</title>
     </head>
-    <body>
+    <body style="background-color:#334a61;">
+    
+        <div id='splash' style="height:10000px;">
+            <div style="text-align:center;maring-top:50px;font-size:3em">root</div>
+        </div>
+        
         <div data-role="page" id="main">
-            <h1>This is a header</h1>
+
         </div>
         <!-- ____________Login Page ____________ -->
         <div data-role="page" id="login">
@@ -36,21 +38,15 @@
         <div data-role="page" id="dashboard" data-transition="slide">
     
             <div data-role="header" data-position="fixed" data-theme="b">
-                <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-left ui-nodisc-icon"></a>
+                <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-left ui-nodisc-icon" style="padding-top:25px"></a>
                 <h1>Dashboard</h1>
                 
             </div>
 
             <div id="dash_content" data-role="main" class="ui-content" data-theme="a">
-                <div id="zone1" data-role="collapsible" class="ui-content ui-custom-zone  ui-corner-all">
-                    <h1>Im a collapsible</h1>
-                </div>
-                <div id="zone2" class="ui-content ui-custom-zone  ui-corner-all"></div>
-                <div id="zone3" class="ui-content ui-custom-zone  ui-corner-all"></div>
             </div>
 
         </div>
-
 
         <script type="text/javascript" src="js/lib/jquery/jquery-1.10.1.js"></script>
         <script type="text/javascript" src="cordova.js"></script>

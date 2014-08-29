@@ -1,4 +1,4 @@
-D:\dev\root_mobile\platforms\android\ant-build\FarmPerfect.ap_ \
+D:\dev\root_mobile\platforms\android\ant-build\rooT.ap_ \
  : D:\dev\root_mobile\platforms\android\res\drawable\icon.png \
 D:\dev\root_mobile\platforms\android\res\drawable-hdpi\icon.png \
 D:\dev\root_mobile\platforms\android\res\drawable-land-hdpi\screen.png \

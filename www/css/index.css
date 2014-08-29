@@ -108,7 +108,7 @@ input#email,#pass {
 .ui-custom-zone {
     background-color: rgba(0, 0, 0, .4);
     margin-top: 16px; 
-    height: 116px;
+    height: 100px;
     margin-left: 0px;
     margin-right: 0px;
     padding: 0px;

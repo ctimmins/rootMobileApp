@@ -17,12 +17,12 @@
        under the License.
  */
 
-package com.chadtimmins.mobile;
+package com.rootsystems.mobile;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
 
-public class FarmPerfect extends CordovaActivity 
+public class rooT extends CordovaActivity 
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
