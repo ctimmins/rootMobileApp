@@ -1,23 +1,28 @@
 #login {
 	background: url('../img/login_background.jpg');
+    background-size: cover;
 	text-align: center;
     padding-top: 200px;	
 }
 
 #map {
 	background: url('../img/root-background-2.jpg');
+    background-size: cover;
 }
 
 #newzone {
 	background: url('../img/root-background-6.jpg');
+    background-size: cover;
 }
 
 #dashboard {
     background: url('../img/root-background-6.jpg');
+    background-size: cover;
 }
 
 #account_content {
     background: url('../img/root-background-4.jpg');
+    background-size: cover;
 }
 
 #blur_top{
@@ -103,7 +108,7 @@ input#email,#pass {
 .ui-custom-zone {
     background-color: rgba(0, 0, 0, .4);
     margin-top: 16px; 
-    height: 116px;
+    height: 100px;
     margin-left: 0px;
     margin-right: 0px;
     padding: 0px;

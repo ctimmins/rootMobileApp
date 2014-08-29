@@ -8,9 +8,10 @@ $(document).on('deviceready', function(){
 
     $(document).on('mobileinit', function(){
         console.log("jqm has been loaded");
+        $.mobile.maxTransitionWidth = 0;
+        $("#splash").hide();
         $.support.cors = true;
-        $.mobile.allowCrossDomainPages = true; 
-        
+        $.mobile.allowCrossDomainPages = true;         
         app.initialize();
     });
     
@@ -24,7 +25,6 @@ $(document).on('deviceready', function(){
 var app = {
 
     initialize: function(){
-
 
         //prepend nav panel and try login.  only triggered once
         $(document).one("pagecontainerbeforechange", function(e, ui){
@@ -167,12 +167,16 @@ var app = {
     },
 
     logout: function(){
-        $('body').pagecontainer("change", "#login");
-        console.log("logging out");
-        //clear user credentials
-        window.localStorage.clear();
-        //show login screen
-        app.userData = null;
+        $.getJSON(handler,{Mode: 'Logout'}, function(returnVal)
+        {
+            $('body').pagecontainer("change", "#login");
+            console.log("logging out");
+            //clear user credentials
+            window.localStorage.clear();
+            //show login screen
+            app.userData = null;
+        });
+        
     },
 
     userData: null
