@@ -1,10 +1,8 @@
 var dashboard = {
 	loadZones: function(zones){
         $('#dash_content').empty();
-		$.each(zones, function(zone, id){
+		$.each(zones, function(index, id){
 			$.getJSON(handler, {ZID: id, onlyCurrent: true, Mode: 'GetZoneOverview'}, function(returnVal){
-				console.log("Zone Name: " + returnVal["Name"]);
-				console.log("Crop: " + returnVal["Crop"]);
                 
                 var zone_details = returnVal,
                     status = zone_details["Status"],
@@ -56,7 +54,7 @@ var dashboard = {
 				
 				//populate page with zone data
 			    $('#dash_content').append(
-			        "<div class='ui-content ui-custom-zone ui-corner-all'>" + 
+			        "<div class='ui-content ui-custom-zone ui-corner-all' id='" + id + "'>" + 
 			            "<div class='zone-body'>" +
 				            "<div class='zone-heading' style='font-weight:700;height:22px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.3);'>" +
                                 "<span style='float:left;width:48%;text-align:center;'>" + returnVal["Name"] + "</span>" +
@@ -69,8 +67,14 @@ var dashboard = {
                         "</div>" +
 			        "</div>"
 			        )
+			    //bind each zone to navigate to specific zone detail
+			    $('.ui-custom-zone:last-child').on("touchstart", function(){
+			    	console.log("ZID: " + id);
+			    });
+
 			    $('#dashboard').trigger('create');
 			});
+
 		});
 	}
 }
