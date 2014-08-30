@@ -69,7 +69,8 @@ var dashboard = {
 			        )
 			    //bind each zone to navigate to specific zone detail
 			    $('.ui-custom-zone:last-child').on("touchstart", function(){
-			    	console.log("ZID: " + id);
+			    	zone.loadZoneDetails(id);
+                    $('body').pagecontainer("change", "#detail");
 			    });
 
 			    $('#dashboard').trigger('create');

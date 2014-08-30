@@ -8,7 +8,7 @@ $(document).on('deviceready', function(){
 
     $(document).on('mobileinit', function(){
         console.log("jqm has been loaded");
-        $.mobile.maxTransitionWidth = 320;
+        $.mobile.maxTransitionWidth = 0;
         $("#splash").hide();
         $.support.cors = true;
         $.mobile.allowCrossDomainPages = true;         
