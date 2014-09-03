@@ -1,5 +1,6 @@
 var dashboard = {
 	loadZones: function(zones){
+        $('body').pagecontainer("change", "#dashboard");
         $('#dash_content').empty();
 		$.each(zones, function(index, id){
 			$.getJSON(handler, {ZID: id, onlyCurrent: true, Mode: 'GetZoneOverview'}, function(returnVal){
@@ -53,29 +54,39 @@ var dashboard = {
                 });
 				
 				//populate page with zone data
-			    $('#dash_content').append(
-			        "<div class='ui-content ui-custom-zone ui-corner-all' id='" + id + "'>" + 
-			            "<div class='zone-body'>" +
-				            "<div class='zone-heading' style='font-weight:700;height:22px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.3);'>" +
-                                "<span style='float:left;width:48%;text-align:center;'>" + returnVal["Name"] + "</span>" +
-                                "<span style='float:left;width:4%;text-align:center;'> | </span>" +
-					            "<span style='float:left;width:48%;text-align:center;'>" + returnVal["Crop"] + "</span>" + 
-				            "</div>" +
-                            "<div>" +
-                                custombody +
+			    $('#dash_content').prepend($(
+                        "<div class='ui-content ui-custom-zone ui-corner-all' id='" + id + "'>" + 
+                            "<div class='zone-body'>" +
+                                "<div class='zone-heading' style='font-weight:700;height:22px;margin-bottom:10px;background-color:rgba(255, 255, 255, 0.3);'>" +
+                                    "<span style='float:left;width:48%;text-align:center;'>" + returnVal["Name"] + "</span>" +
+                                    "<span style='float:left;width:4%;text-align:center;'> | </span>" +
+                                    "<span style='float:left;width:48%;text-align:center;'>" + returnVal["Crop"] + "</span>" + 
+                                "</div>" +
+                                "<div>" +
+                                    custombody +
+                                "</div>" +
                             "</div>" +
-                        "</div>" +
-			        "</div>"
-			        )
-			    //bind each zone to navigate to specific zone detail
-			    $('.ui-custom-zone:last-child').on("touchstart", function(){
-			    	zone.loadZoneDetails(id);
-                    $('body').pagecontainer("change", "#detail");
-			    });
+                        "</div>").on("touchstart", function(){
+                            zone.loadZoneDetails(id);                    
+                        })
+			        );
 
 			    $('#dashboard').trigger('create');
 			});
 
 		});
+        
+        $('#dash_content').append($(
+            "<div class='ui-content ui-custom-zone ui-corner-all'>" + 
+                "<div class='zone-body' style='text-align: center;font-size: 2em;'>" +
+                    "<div>" +
+                        "Add New Zone" +
+                    "</div>" +
+                "</div>" +
+            "</div>").on("touchstart",function()
+            {
+                $('body').pagecontainer("change", "#newzone");
+            })
+        );
 	}
 }

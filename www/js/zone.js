@@ -7,7 +7,9 @@ var zone = {
         {
             if(returnVal["Status"] == "Fail")
                 window.location = "login.html";
-                
+            
+            $('body').pagecontainer("change", "#detail");
+            
             var zone_details = returnVal,
                 status = zone_details["Status"],
                 name = zone_details["Name"],

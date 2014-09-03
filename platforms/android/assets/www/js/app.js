@@ -30,34 +30,34 @@ var app = {
         $(document).one("pagecontainerbeforechange", function(e, ui){
             var s = document.createElement("script");
             s.type = "text/javascript";
-            s.src  = "http://maps.google.com/maps/api/js?v=3&sensor=true&callback=gmap_draw";
-            window.gmap_draw = function(){
-                //map.getCurrentLocation();
-                //map.onSuccess(pos);
-                console.log("maps script loaded");
-            };
+            s.src  = "http://maps.google.com/maps/api/js?libraries=drawing,places&v=3&sensor=true&callback=gmap_draw";
             $("head").append(s);
+            window.gmap_draw = function()
+            {
+                console.log("maps script loaded");
 
-            $.get('templates/navpanel.html', function(template){
-                console.log("appending navpanel");
-                var panel = template;
-                $.mobile.pageContainer.prepend(panel);
-                $('#navpanel').panel();
-            });
+                $.get('templates/navpanel.html', function(template){
+                    console.log("appending navpanel");
+                    var panel = template;
+                    $.mobile.pageContainer.prepend(panel);
+                    $('#navpanel').panel();
+                    
+                });
 
-            //retrieve user credentials from local storage and try login
-            var email = window.localStorage.getItem("Email");
-            var pass = window.localStorage.getItem("Password");
+                //retrieve user credentials from local storage and try login
+                var email = window.localStorage.getItem("Email");
+                var pass = window.localStorage.getItem("Password");
 
-            if(email != null && pass != null) {
-                app.login(email, pass);
-            }
-            else{
-                app.logout();
-            }
+                if(email != null && pass != null) {
+                    app.login(email, pass);
+                }
+                else{
+                    app.logout();
+                }
 
-            e.preventDefault();
-            console.log(app.userData);
+                e.preventDefault();
+                console.log(app.userData);
+            };
         });
         
         //bind panel events
@@ -68,24 +68,41 @@ var app = {
             $(document).trigger("create");
 
             //save account details if save is pressed
-            $('#saveAccountDetails').on("touchstart", function(){
+            $('#saveAccountDetails').off().on("touchstart", function(){
                 account.updateAccount();
             });
 
             //toggle account display
-            $('#my_account_btn').on("touchstart", function(){
+            $('#my_account_btn').off().on("touchstart", function(){
                 // $('#account_content').toggle();
                 if($('#account_content').is(':hidden'))
                     $('#account_content').slideDown(400);
                 else
                     $('#account_content').slideUp(300);
             });
+            
+             //navpanel links
+            $("#new_zone_btn").off().on("touchstart",function()
+            {
+                $('#navpanel').panel( "close" );
+                $('body').pagecontainer("change", "#newzone");
+            });
+            $("#dashboard_btn").off().on("touchstart",function()
+            {
+                $('#navpanel').panel( "close" );
+                $('body').pagecontainer("change", "#dashboard");
+            });
+            
+            //refresh page
+             $("#refreshDashboard").off().on("touchstart",function()
+             {
+                app.relogin("dashboard");
+             });
+            
         });
 
         //unbind panel events and close account details
         $(document).on("panelbeforeclose", function(e, ui){
-            $('#saveAccountDetails').off();
-            $('#my_account_btn').off();
             $('#account_content').hide();
             $('#navpanel').trigger('updatelayout');
         });
@@ -101,9 +118,6 @@ var app = {
                     app.userData = null;
                     //$('#login_button').val('');
                     $('#pass').val('');
-                    break;
-                case "dashboard":
-                    dashboard.loadZones(app.userData["Zones"]);
                     break;
                 default:
                     console.log("current page: " + ui.toPage.attr('id'));
@@ -122,20 +136,7 @@ var app = {
                 app.login(email, pass);
             });
         
-        });
-
-        //bind dashboard events
-        $(document).on("pagebeforecreate", "#dashboard", function(event, ui){
-            //populate dashboard 
-            //$(document).on("scrollstart", '.zone-body', false);
-            //dashboard.loadZones(app.userData["Zones"]);
-        });
-
-        //bind map events
-        $(document).on("pagebeforecreate", '#map', function(event, ui){
-            //map.getCurrentLocation();
-            map.onSuccess();
-        })      
+        });   
     },
 
     login: function(email, pass){
@@ -150,20 +151,33 @@ var app = {
                 app.userData = returnVal
                 //initialize account
                 account.initialize();                
-                $('body').pagecontainer("change", "#dashboard");     
+                dashboard.loadZones(app.userData["Zones"]);     
             }
             else{
                 app.logout();
             }
         });    
     },
-
-    renderHomeView: function(){
-        console.log("rendering home view");        
-    },
-
-    renderMapView: function(){
-        console.log("rendering map view");
+    
+    relogin: function(page){
+        
+        var email = window.localStorage.getItem("Email");
+        var pass = window.localStorage.getItem("Password");
+        $.getJSON(handler, {Email: email, Password: pass, Mode: "GetUserDetails"}, function(returnVal){
+            if(returnVal != "Fail"){
+                //store user credentials upon successful login
+                window.localStorage.setItem("Email", email);
+                window.localStorage.setItem("Password", pass);
+                //store userData on successful login
+                app.userData = returnVal
+                if(page == "dashboard")
+                    dashboard.loadZones(app.userData["Zones"]);     
+            }
+            else{
+                app.logout();
+            }
+        });    
+        
     },
 
     logout: function(){
