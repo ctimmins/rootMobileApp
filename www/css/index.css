@@ -41,6 +41,10 @@
     border-width: 0px;
 }
 
+..ui-btn-custom-menu:hover {
+    color: #223F52 !important;
+}
+
 .ui-panel-inner{
     padding: 0px;
 }

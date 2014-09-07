@@ -2,14 +2,13 @@ var zone = {
 	loadZoneDetails: function(id)
     {
         console.log("ZID: " + id);
-        
+        $("#details_content").empty();
+        $('body').pagecontainer("change", "#detail");
         $.getJSON(handler,{ZID: id, onlyCurrentFull: true, Mode: 'GetZoneOverview'}, function(returnVal)
         {
             if(returnVal["Status"] == "Fail")
                 window.location = "login.html";
-            
-            $('body').pagecontainer("change", "#detail");
-            
+
             var zone_details = returnVal,
                 status = zone_details["Status"],
                 name = zone_details["Name"],

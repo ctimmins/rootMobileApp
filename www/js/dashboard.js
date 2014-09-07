@@ -1,5 +1,7 @@
 var dashboard = {
 	loadZones: function(zones){
+        $.mobile.maxTransitionWidth = 10000;
+        $.mobile.defaultPageTransition = "slide";
         $('body').pagecontainer("change", "#dashboard");
         $('#dash_content').empty();
 		$.each(zones, function(index, id){
