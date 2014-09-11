@@ -39,6 +39,7 @@ D:\dev\root_mobile\platforms\android\assets\www\js \
 D:\dev\root_mobile\platforms\android\assets\www\plugins \
 D:\dev\root_mobile\platforms\android\assets\www\templates \
 D:\dev\root_mobile\platforms\android\assets\www\css\bootstrap.min.css \
+D:\dev\root_mobile\platforms\android\assets\www\css\font-awesome.min.css \
 D:\dev\root_mobile\platforms\android\assets\www\css\images \
 D:\dev\root_mobile\platforms\android\assets\www\css\index.css \
 D:\dev\root_mobile\platforms\android\assets\www\css\jquery.mobile-1.4.3.min.css \
@@ -245,6 +246,11 @@ D:\dev\root_mobile\platforms\android\assets\www\css\images\icons-svg\user-black.
 D:\dev\root_mobile\platforms\android\assets\www\css\images\icons-svg\user-white.svg \
 D:\dev\root_mobile\platforms\android\assets\www\css\images\icons-svg\video-black.svg \
 D:\dev\root_mobile\platforms\android\assets\www\css\images\icons-svg\video-white.svg \
+D:\dev\root_mobile\platforms\android\assets\www\fonts\fontawesome-webfont.eot \
+D:\dev\root_mobile\platforms\android\assets\www\fonts\fontawesome-webfont.svg \
+D:\dev\root_mobile\platforms\android\assets\www\fonts\fontawesome-webfont.ttf \
+D:\dev\root_mobile\platforms\android\assets\www\fonts\fontawesome-webfont.woff \
+D:\dev\root_mobile\platforms\android\assets\www\fonts\FontAwesome.otf \
 D:\dev\root_mobile\platforms\android\assets\www\fonts\glyphicons-halflings-regular.eot \
 D:\dev\root_mobile\platforms\android\assets\www\fonts\glyphicons-halflings-regular.svg \
 D:\dev\root_mobile\platforms\android\assets\www\fonts\glyphicons-halflings-regular.ttf \

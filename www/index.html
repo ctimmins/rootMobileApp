@@ -8,6 +8,7 @@
         <meta name="msapplication-tap-highlight" content="no" />
         <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css" />
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>rooT Mobile</title>
     </head>
@@ -21,7 +22,7 @@
 
         </div>
         <!-- ____________Login Page ____________ -->
-        <div data-role="page" id="login">
+        <div data-role="page" id="login" class="content_background" data-transition="slide">
 
             <div id="main_content" data-role="main" class="ui-content" data-theme="a">
 
@@ -39,8 +40,8 @@
         <div data-role="page" id="dashboard" class="content_background" data-transition="slide">
     
             <div data-role="header" data-position="fixed" data-theme="b">
-                <a id="refreshDashboard" class="ui-btn ui-btn-custom-menu ui-icon-refresh ui-btn-icon-right ui-nodisc-icon ui-btn-left" style="padding-top:20px"></a>
-                <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-right ui-nodisc-icon ui-btn-right" style="padding-top:20px"></a>
+                <a id="refreshDashboard" class="ui-btn-left ui-btn-custom-menu"><i class="fa fa-refresh"></i></a>
+                <a href="#navpanel" class="ui-btn-custom-menu ui-btn-right"><i class="fa fa-bars"></i></a>
                 <h1>Dashboard</h1>
             </div>
 
@@ -53,8 +54,8 @@
         <div data-role="page" id="detail" class="content_background" data-transition="slide">
     
             <div data-role="header" data-position="fixed" data-theme="b">
-                <a href="javascript:history.back(1) " class="ui-btn ui-btn-custom-menu ui-icon-carat-l ui-btn-icon-right ui-nodisc-icon ui-btn-left" style="padding-top:20px"></a>
-                <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-right ui-nodisc-icon ui-btn-right" style="padding-top:20px"></a>
+                <a href="javascript:history.back(1) " class="ui-btn-custom-menu ui-btn-left"><i class="fa fa-chevron-left"></i></a>
+                <a href="#navpanel" class="ui-btn-custom-menu ui-btn-right"><i class="fa fa-bars"></i></a>
                 <h1 id="detail_title">Details</h1>
             </div>
 
@@ -67,8 +68,8 @@
         <div data-role="page" id="newzone" class="content_background" data-transition="slide">
     
             <div data-role="header" data-position="fixed" data-theme="b">
-                <a href="javascript:history.back(1) " class="ui-btn ui-btn-custom-menu ui-icon-carat-l ui-btn-icon-right ui-nodisc-icon ui-btn-left" style="padding-top:20px"></a>
-                <a href="#navpanel" class="ui-btn ui-btn-custom-menu ui-icon-bars ui-btn-icon-right ui-nodisc-icon ui-btn-right" style="padding-top:20px"></a>
+                <a href="javascript:history.back(1) " class="ui-btn-custom-menu ui-btn-left"><i class="fa fa-chevron-left"></i></a>
+                <a href="#navpanel" class="ui-btn-custom-menu ui-btn-right"><i class="fa fa-bars"></i></a>
                 <h1 id="new_zone_title">Add New Zone</h1>
             </div>
 
