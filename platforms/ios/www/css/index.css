@@ -41,6 +41,10 @@
     border-width: 0px;
 }
 
+..ui-btn-custom-menu:hover {
+    color: #223F52 !important;
+}
+
 .ui-panel-inner{
     padding: 0px;
 }
@@ -143,6 +147,8 @@ input#email,#pass {
 
 .root-btn {
     color: #F4F4F4 !important;
-    background:rgba(0,164,128,1) !important;
+    background:#00A480 !important;
+    opacity: 1 !important;
+    text-indent: 0px !important;
     border: 0px;
 }

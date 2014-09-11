@@ -119,6 +119,9 @@ var app = {
                     //$('#login_button').val('');
                     $('#pass').val('');
                     break;
+                case "newzone2":
+                    newZone.loadMap();
+                    break;
                 default:
                     console.log("current page: " + ui.toPage.attr('id'));
                     break;
