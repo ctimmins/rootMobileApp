@@ -40,7 +40,8 @@ var map = {
 		//map.drawBorder("103452212453f63bd7ed4fb4.72247349");
 		google.maps.event.addListener(map.map,'tilesloaded', function(event){
 			console.log("tiles have been loaded");
-			map.drawBorder("103452212453f63bd7ed4fb4.72247349");
+			//map.drawBorder("103452212453f63bd7ed4fb4.72247349");
+            map.drawBorder("206689629553eb929a611490.49983263");
 		});
 	
 	},

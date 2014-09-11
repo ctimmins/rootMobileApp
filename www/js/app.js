@@ -136,7 +136,12 @@ var app = {
                 app.login(email, pass);
             });
         
-        });   
+        });
+
+        //bind new zone events
+        $(document).on('pagebeforecreate', '#newzone', function(event, ui){
+            newZone.initialize();
+        })   
     },
 
     login: function(email, pass){

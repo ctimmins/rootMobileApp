@@ -12,12 +12,16 @@
 
 #newzone {
 	background: url('../img/root-background-6.jpg');
-    background-size: cover;
 }
 
 #dashboard {
     background: url('../img/root-background-6.jpg');
+}
+
+.content_background {
     background-size: cover;
+    height:100%;
+    display:none;
 }
 
 #account_content {
@@ -99,7 +103,7 @@ input#email,#pass {
 
 #dash_content {
     background-color: rgba(255,255,255,.2);
-    height: 500px;
+    height: 100%;
     padding-left: 10px;
     padding-right: 10px;
     border: 0px;
@@ -137,3 +141,8 @@ input#email,#pass {
     display: none;
 }
 
+.root-btn {
+    color: #F4F4F4 !important;
+    background:rgba(0,164,128,1) !important;
+    border: 0px;
+}
