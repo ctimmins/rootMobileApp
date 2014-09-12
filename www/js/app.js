@@ -110,7 +110,6 @@ var app = {
         $(document).on("pagecontainerbeforeshow", function(e, ui){
             
             app.currentPage = ui.toPage.attr('id');
-
             switch(app.currentPage){
                 case "login":
                     //clear user credentials
@@ -125,7 +124,6 @@ var app = {
                 case "newzone2":
                     console.log("resizing map");
                     newZone.loadMap();
-                   // google.maps.event.trigger(newZone.map, "resize");
                     break;
                 default:
                     console.log("current page: " + app.currentPage);
@@ -144,12 +142,7 @@ var app = {
                 app.login(email, pass);
             });
         
-        });
-
-        //bind new zone events
-        $(document).on('pagebeforecreate', '#newzone', function(event, ui){
-            newZone.initialize();
-        })   
+        });   
     },
 
     login: function(email, pass){

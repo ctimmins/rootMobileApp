@@ -24,6 +24,7 @@ var newZone = {
 				var Lat = results[0].geometry.location.lat();
 				var Long = results[0].geometry.location.lng();
 				newZone.currentLocation = {"lat": Lat, "lng": Long};
+                console.log(newZone.currentLocation);
 			});	
 		}
 			
@@ -31,6 +32,7 @@ var newZone = {
 
 	loadMap: function(){
 		console.log("loading map");
+        
 		//var myAddress = "425 University Ave., Davis, CA";
 		//var Lat, Long;
 		//var geocoder = new google.maps.Geocoder();
@@ -43,28 +45,40 @@ var newZone = {
 	 //            center: new google.maps.LatLng(Lat, Long),
 	 //            zoom: 17
 	 //        };
-		var lat = newZone.currentLocation.lat;
-		var lng = newZone.currentLocation.lng;
+        
+        if(typeof newZone.map === "undefined")
+        {
+            var lat = newZone.currentLocation.lat;
+            var lng = newZone.currentLocation.lng;
+            
+            console.log(newZone.currentLocation);
 
-        var mapOptions = {
-            mapTypeId: google.maps.MapTypeId.SATELLITE,
-            center: new google.maps.LatLng(lat, lng),
-            zoom: 17,
-            disableDefaultUI: true
+            var mapOptions = {
+                mapTypeId: google.maps.MapTypeId.SATELLITE,
+                center: new google.maps.LatLng(lat, lng),
+                zoom: 17,
+                disableDefaultUI: true
+            }
+
+            //calculate height for map
+            var mapHeight = $(window).height() - $('div[data-role=header]:visible').height();
+            $('#map_canvas').css("height", mapHeight);
+            //create map object
+
+            newZone.map = new google.maps.Map($('#map_canvas')[0], mapOptions);
+            
+            //create marker object
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lng),
+                map: newZone.map,
+                animation: google.maps.Animation.BOUNCE
+            });
         }
 
-        //calculate height for map
-        var mapHeight = $(window).height() - $('div[data-role=header]:visible').height();
-        $('#map_canvas').css("height", mapHeight);
-        //create map object
-        newZone.map = new google.maps.Map($('#map_canvas')[0], mapOptions);
-        google.maps.event.trigger(newZone.map, "resize");
-        //create marker object
-        var marker = new google.maps.Marker({
-        	position: new google.maps.LatLng(lat, lng),
-        	map: newZone.map,
-        	animation: google.maps.Animation.BOUNCE
-        });
+        
+        //need function to get position every second and update the map with the new position and draw the line
+        
+        
         console.log("done loading");
 		
 		
