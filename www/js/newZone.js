@@ -12,8 +12,26 @@ var newZone = {
 	},
 
 	getLocation: function(){
-		var useCurrentLocation = false;
+		var useCurrentLocation = true;
+
 		if (useCurrentLocation){
+			
+			var geoOptions = {
+				maximumAge: 3000,
+				timeout: 5000,
+				enableHighAccuracy: true
+			};
+			console.log("entering geolocation function");
+			navigator.geolocation.getCurrentLocation(onSuccess, onError, geoOptions);
+
+			//geolocation callback functions
+			function onSuccess(position){
+				console.log("geolocation was a success");
+			}
+
+			function onError(error){
+				alert('message: ' + error.message);
+			}
 
 		}
 		else {
@@ -32,19 +50,6 @@ var newZone = {
 
 	loadMap: function(){
 		console.log("loading map");
-        
-		//var myAddress = "425 University Ave., Davis, CA";
-		//var Lat, Long;
-		//var geocoder = new google.maps.Geocoder();
-		// geocoder.geocode({"address": myAddress}, function(results){
-		// 	var Lat = results[0].geometry.location.lat();
-		// 	var Long = results[0].geometry.location.lng();
-
-		// 	var mapOptions = {
-	 //            mapTypeId: google.maps.MapTypeId.SATELLITE,
-	 //            center: new google.maps.LatLng(Lat, Long),
-	 //            zoom: 17
-	 //        };
         
         if(typeof newZone.map === "undefined")
         {
