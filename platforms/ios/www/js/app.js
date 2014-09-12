@@ -123,7 +123,7 @@ var app = {
                     newZone.loadMap();
                     break;
                 default:
-                    console.log("current page: " + ui.toPage.attr('id'));
+                    console.log("current page: " + app.currentPage);
                     break;
             }
         });
