@@ -1,8 +1,15 @@
 var newZone = {
+	
 	geoOptions: {
-				maximumAge: 3000,
-				timeout: 5000,
-				enableHighAccuracy: true
+		maximumAge: 3000,
+		timeout: 5000,
+		enableHighAccuracy: true
+	},
+
+	pathOptions: {
+		clickable: false,
+	    editable: false,
+		strokeColor: '#FF0000'
 	},
 
 	initialize: function(){
@@ -74,8 +81,8 @@ var newZone = {
             //calculate height for map
             var mapHeight = $(window).height() - $('div[data-role=header]:visible').height();
             $('#map_canvas').css("height", mapHeight);
+            
             //create map object
-
             newZone.map = new google.maps.Map($('#map_canvas')[0], mapOptions);
             
             //create marker object
@@ -85,6 +92,9 @@ var newZone = {
                 animation: google.maps.Animation.BOUNCE,
                 visible: false
             });
+
+            //define map for path to be drawn on
+            newZone.pathOptions.map = newZone.map;
 
 	        //need function to get position every second and update the map with the new position and draw the line
 	        newZone.trackLocation();
@@ -103,8 +113,11 @@ var newZone = {
 		
 		//show marker
 		newZone.marker.visible = true;
+		newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
+
 		//keep track of where user has been
 		var pathTraveled = [];
+		var myPathObj;
 
 		//watch for changes in user position
         navigator.geolocation.watchPosition(onSuccess, onError, newZone.geoOptions);
@@ -123,7 +136,15 @@ var newZone = {
 				pathTraveled.push(new google.maps.LatLng(newZone.currentLocation.lat, newZone.currentLocation.lng));
 				console.log(pathTraveled);
 				//and draw new path
+				if(typeof myPathObj === "undefined"){
+					myPathObj = new google.maps.Polyline(newZone.pathOptions);
+					myPathObj.setPath(pathTraveled);
+				}
+				else
+					myPathObj.setPath(pathTraveled);
 			} 
+
+
 			// newZone.currentLocation.lat = position.coords.latitude;
 			// newZone.currentLocation.lng = position.coords.longitude;
 
@@ -142,6 +163,7 @@ var newZone = {
 			// 	path: pathTraveled,
 			// };
 			// var myPath = new google.maps.Polyline(pathOptions);
+
 		}
 
 		function onError(error){
