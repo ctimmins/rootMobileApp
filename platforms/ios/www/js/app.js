@@ -119,8 +119,13 @@ var app = {
                     //$('#login_button').val('');
                     $('#pass').val('');
                     break;
+                case "newzone":
+                    newZone.initialize();
+                    break;
                 case "newzone2":
+                    console.log("resizing map");
                     newZone.loadMap();
+                   // google.maps.event.trigger(newZone.map, "resize");
                     break;
                 default:
                     console.log("current page: " + app.currentPage);
