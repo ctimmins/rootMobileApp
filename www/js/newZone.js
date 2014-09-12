@@ -1,4 +1,9 @@
 var newZone = {
+	geoOptions: {
+				maximumAge: 3000,
+				timeout: 5000,
+				enableHighAccuracy: true
+	},
 
 	initialize: function(){
 		
@@ -13,38 +18,34 @@ var newZone = {
 
 	getLocation: function(){
 		var useCurrentLocation = true;
+	
+		console.log("entering geolocation function");
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, newZone.geoOptions);
 
-		if (useCurrentLocation){
-			
-			var geoOptions = {
-				maximumAge: 3000,
-				timeout: 5000,
-				enableHighAccuracy: true
-			};
-			console.log("entering geolocation function");
-			navigator.geolocation.getCurrentLocation(onSuccess, onError, geoOptions);
-
-			//geolocation callback functions
-			function onSuccess(position){
-				console.log("geolocation was a success");
-			}
-
-			function onError(error){
-				alert('message: ' + error.message);
-			}
+		//geolocation callback functions
+		function onSuccess(position){
+			console.log("geolocation was a success");
 
 		}
-		else {
-			console.log("using hard code");
-			var geocoder = new google.maps.Geocoder();
-			var myAddress = "425 University Ave., Davis, CA";
-			geocoder.geocode({"address": myAddress}, function(results){
-				var Lat = results[0].geometry.location.lat();
-				var Long = results[0].geometry.location.lng();
-				newZone.currentLocation = {"lat": Lat, "lng": Long};
-                console.log(newZone.currentLocation);
-			});	
+
+		function onError(error){
+			alert('message: ' + error.message);
 		}
+	
+		var myAddress;
+		if (app.userData.Address == "") 
+			myAddress = app.userData.Zip;
+		else
+			myAddress = app.userData.Address;
+
+		var geocoder = new google.maps.Geocoder();
+		geocoder.geocode({"address": myAddress}, function(results){
+			var Lat = results[0].geometry.location.lat();
+			var Long = results[0].geometry.location.lng();
+			newZone.currentLocation = {"lat": Lat, "lng": Long};
+            console.log(newZone.currentLocation);
+		});	
+		
 			
 	},
 
@@ -53,6 +54,7 @@ var newZone = {
         
         if(typeof newZone.map === "undefined")
         {
+
             var lat = newZone.currentLocation.lat;
             var lng = newZone.currentLocation.lng;
             
@@ -73,18 +75,34 @@ var newZone = {
             newZone.map = new google.maps.Map($('#map_canvas')[0], mapOptions);
             
             //create marker object
-            var marker = new google.maps.Marker({
+            newZone.marker = new google.maps.Marker({
                 position: new google.maps.LatLng(lat, lng),
                 map: newZone.map,
-                animation: google.maps.Animation.BOUNCE
+                animation: google.maps.Animation.BOUNCE,
+                visible: false
             });
+
+	        //need function to get position every second and update the map with the new position and draw the line
+	         console.log("entering watchPosition");
+	        navigator.geolocation.watchPosition(onSuccess, onError, newZone.geoOptions);
+	        //geolocation callback functions
+			function onSuccess(position){
+				console.log("watchPosition was a success");
+				console.log("Lat: " + position.coords.latitude);
+				console.log("Long: " + position.coords.longitude);
+				newZone.marker.visible = true;
+				newZone.marker.position = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+				newZone.map.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+			}
+			function onError(error){
+				console.log("got error");
+			}
+			
+	        console.log("done loading");
         }
 
         
-        //need function to get position every second and update the map with the new position and draw the line
         
-        
-        console.log("done loading");
 		
 		
         //var drawingManager = new google.maps.drawing.DrawingManager(drawingOptions);
