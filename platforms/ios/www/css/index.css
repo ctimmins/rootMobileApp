@@ -151,13 +151,51 @@ input#email,#pass {
     opacity: 1 !important;
     text-indent: 0px !important;
     border: 0px;
+    text-shadow: none !important;
 }
 
 div#new_zone_content2 {
     padding: 0px;
+    display: inline !important;
 }
 
 div#map_canvas {
     width: 100%;
     padding: 0px;
+    position: absolute;
+}
+
+div#map_buttons {
+    padding: 0px;
+    bottom: 5%;
+    left: 0px;
+    right: 0px;
+    position: absolute;
+    text-align: center;
+    z-index: 10;
+}
+
+div#map_buttons button {
+    border: 0px;
+    width: 40%;
+    text-shadow: none !important;    
+}
+
+button#track_start {
+    margin-left: 0px;
+    background-color: #00BB00;
+    color: #FFFFFF;
+}
+
+button#track_stop {
+    display: none;
+    margin-left: 0px;
+    background-color: #DD0000;
+    color: #FFFFFF;
+}
+
+button#track_reset {
+    margin-right: 0px;
+    background-color: #A0A0A0;
+    color: #FFFFFF;
 }

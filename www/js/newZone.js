@@ -20,6 +20,48 @@ var newZone = {
 			var cropName = $('#crop_name').val();
 			//newZone.getLocation();
 		});
+		
+		//when 'Start' is clicked
+		$('button#track_start').on("touchstart", function(e){
+			$('button#track_start').hide();
+			$('button#track_stop').show();
+			if(typeof newZone.myPathObj !== "undefined"){
+				newZone.myPathObj.setPath([]);
+				delete newZone.myPathObj;
+			}
+			newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
+			newZone.trackLocation();
+			console.log("start was pressed");
+		});
+
+		//when 'Stop' is clicked
+		$('button#track_stop').on("touchstart", function(e){
+			$('button#track_stop').hide();
+			$('button#track_start').show();
+			newZone.marker.setAnimation(null);
+			navigator.geolocation.clearWatch(newZone.watchID);
+			newZone.watchID = null;
+			//auto complete path
+			//newZone.pathTraveled.push(newZone.pathTraveled[0]);
+			//newZone.myPathObj.setPath([]);
+			var myNewZone = new google.maps.Polygon(newZone.pathOptions);
+			myNewZone.setPath(newZone.pathTraveled);
+
+			//myNewZone.setOptions(fillColor: '#FF0000', fillOpacity: 0.5);
+			google.maps.event.addDomListener(myNewZone, 'mousedown', function(e){
+				console.log("new zone clicked");
+			});
+			//delete newZone.myPathObj;
+		});
+
+		//when 'Reset' is clicked
+		$('button#track_reset').on("touchstart", function(e){
+			if(newZone.watchID == null){
+				newZone.myPathObj.setPath([]);
+				newZone.pathTraveled = [];
+			}
+		});
+
 		newZone.getInitialLocation();
 	},
 
@@ -27,32 +69,36 @@ var newZone = {
 	/*
 	** called when newzone1 page is loaded
 	*/
-		console.log("entering geolocation function");
-		navigator.geolocation.getCurrentPosition(onSuccess, onError, newZone.geoOptions);
-
-		//geolocation callback functions
-		function onSuccess(position){
-			console.log("geolocation was a success");
-
-		}
-
-		function onError(error){
-			alert('message: ' + error.message);
-		}
-	
+		
 		var myAddress;
 		if (app.userData.Address == "") 
 			myAddress = app.userData.Zip;
 		else
 			myAddress = app.userData.Address+", "+app.userData.State+" "+app.userData.Zip ;
-		console.log(myAddress);
+
 		var geocoder = new google.maps.Geocoder();
 		geocoder.geocode({"address": myAddress}, function(results){
 			var Lat = results[0].geometry.location.lat();
 			var Long = results[0].geometry.location.lng();
 			newZone.currentLocation = {"lat": Lat, "lng": Long};
-            console.log(newZone.currentLocation);
-		});	
+		});
+
+		navigator.geolocation.getCurrentPosition(onSuccess, onError, newZone.geoOptions);
+
+		//geolocation callback functions
+		function onSuccess(position){
+			console.log("geolocation was a success");
+			var Lat = position.coords.latitude;
+			var Long = position.coords.longitude;
+			newZone.currentLocation = {"lat": Lat, "lng": Long};
+
+		}
+
+		function onError(error){		
+			alert('message: ' + error.message);
+		}
+	
+		
 		
 			
 	},
@@ -89,21 +135,21 @@ var newZone = {
             newZone.marker = new google.maps.Marker({
                 position: new google.maps.LatLng(lat, lng),
                 map: newZone.map,
-                animation: google.maps.Animation.BOUNCE,
-                visible: false
+                //animation: google.maps.Animation.BOUNCE,
+                visible: true
             });
 
             //define map for path to be drawn on
             newZone.pathOptions.map = newZone.map;
 
 	        //need function to get position every second and update the map with the new position and draw the line
-	        newZone.trackLocation();
+	        //newZone.trackLocation();
 			
 	        console.log("done loading");
         }
         else{
-        	console.log("map not defined");
-        	newZone.trackLocation();
+        	console.log("map defined");
+        	//newZone.trackLocation();
         }
 	
 	},
@@ -116,11 +162,12 @@ var newZone = {
 		newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
 
 		//keep track of where user has been
-		var pathTraveled = [];
-		var myPathObj;
+		newZone.pathTraveled = [];
+		//var myPathObj;
 
 		//watch for changes in user position
-        navigator.geolocation.watchPosition(onSuccess, onError, newZone.geoOptions);
+		//save watchID to stop tracking later on
+        newZone.watchID = navigator.geolocation.watchPosition(onSuccess, onError, newZone.geoOptions);
 
         //geolocation callback functions
 		function onSuccess(position){
@@ -133,36 +180,17 @@ var newZone = {
 				newZone.marker.setPosition({lat: newZone.currentLocation.lat, lng: newZone.currentLocation.lng});
 				newZone.map.setCenter({lat: newZone.currentLocation.lat, lng: newZone.currentLocation.lng});
 				//add new coordinate to path traveled
-				pathTraveled.push(new google.maps.LatLng(newZone.currentLocation.lat, newZone.currentLocation.lng));
-				console.log(pathTraveled);
+				newZone.pathTraveled.push(new google.maps.LatLng(newZone.currentLocation.lat, newZone.currentLocation.lng));
 				//and draw new path
-				if(typeof myPathObj === "undefined"){
-					myPathObj = new google.maps.Polyline(newZone.pathOptions);
-					myPathObj.setPath(pathTraveled);
+				if(typeof newZone.myPathObj === "undefined"){
+					newZone.myPathObj = new google.maps.Polyline(newZone.pathOptions);
+					newZone.myPathObj.setPath(newZone.pathTraveled);
+					console.log("undefined myPathObj");
 				}
 				else
-					myPathObj.setPath(pathTraveled);
-			} 
-
-
-			// newZone.currentLocation.lat = position.coords.latitude;
-			// newZone.currentLocation.lng = position.coords.longitude;
-
-			//update map center and marker position
-			// newZone.marker.visible = true;
-			// newZone.marker.setPosition({lat: newZone.currentLocation.lat, lng: newZone.currentLocation.lng});
-			// newZone.map.setCenter({lat: newZone.currentLocation.lat, lng: newZone.currentLocation.lng});
-			//draw path
-			//pathTraveled.push(new google.maps.LatLng(newZone.currentLocation.lat, newZone.currentLocation.lng));
-			
-			// var pathOptions = {
-			// 	clickable: false,
-			// 	editable: true,
-			// 	map: newZone.map,
-			// 	strokeColor:
-			// 	path: pathTraveled,
-			// };
-			// var myPath = new google.maps.Polyline(pathOptions);
+					newZone.myPathObj.setPath(newZone.pathTraveled);
+			}
+			console.log("Watching..."); 
 
 		}
 
