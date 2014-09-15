@@ -182,6 +182,7 @@ div#map_buttons button {
 }
 
 button#track_start {
+    display: none;
     margin-left: 0px;
     background-color: #00BB00;
     color: #FFFFFF;
@@ -194,7 +195,15 @@ button#track_stop {
     color: #FFFFFF;
 }
 
+button#track_save {
+    display: none;
+    margin-left: 0px;
+    background-color: #027A8F;
+    color: #FFFFFF;
+}
+
 button#track_reset {
+    display: none;
     margin-right: 0px;
     background-color: #A0A0A0;
     color: #FFFFFF;

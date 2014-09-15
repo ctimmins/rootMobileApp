@@ -1,5 +1,6 @@
 var newZone = {
-	
+	isMapReady: false,
+
 	geoOptions: {
 		maximumAge: 3000,
 		timeout: 5000,
@@ -7,58 +8,81 @@ var newZone = {
 	},
 
 	pathOptions: {
-		clickable: false,
+		clickable: true,
 	    editable: false,
-		strokeColor: '#FF0000'
+		strokeColor: '#FF0000',
+		fillColor: '#FF0000',
+		fillOpacity: .4
 	},
 
 	initialize: function(){
 		
 		//when 'Next' is clicked
 		$('#new_zone_next_button').on("touchstart", function(e){
-			var zoneName = $('#zone_name').val();
-			var cropName = $('#crop_name').val();
+			newZone.zoneName = $('#zone_name').val();
+			newZone.cropName = $('#crop_name').val();
 			//newZone.getLocation();
 		});
 		
 		//when 'Start' is clicked
 		$('button#track_start').on("touchstart", function(e){
-			$('button#track_start').hide();
-			$('button#track_stop').show();
-			if(typeof newZone.myPathObj !== "undefined"){
-				newZone.myPathObj.setPath([]);
-				delete newZone.myPathObj;
+			if(newZone.isMapReady == false){
+				//newZone.loadMap();
+				console.log("Map not ready");
 			}
-			newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
-			newZone.trackLocation();
+			else{
+				$('button#track_start').hide();
+				$('button#track_stop').show();
+				if(typeof newZone.myNewZone != "undefined"){
+					//newZone.myNewZone.setPath([]);
+					//delete newZone.myPathObj;
+				}
+				newZone.startTrackingLocation();
+			}
+			
+			//newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
 			console.log("start was pressed");
 		});
 
 		//when 'Stop' is clicked
 		$('button#track_stop').on("touchstart", function(e){
-			$('button#track_stop').hide();
-			$('button#track_start').show();
-			newZone.marker.setAnimation(null);
-			navigator.geolocation.clearWatch(newZone.watchID);
-			newZone.watchID = null;
-			//auto complete path
-			//newZone.pathTraveled.push(newZone.pathTraveled[0]);
-			//newZone.myPathObj.setPath([]);
-			var myNewZone = new google.maps.Polygon(newZone.pathOptions);
-			myNewZone.setPath(newZone.pathTraveled);
+			if(newZone.isMapReady == false){
+				//newZone.loadMap();
+				console.log("Map not ready");
+			}
+			else{
+				$('button#track_stop').hide();
+				$('button#track_save').show();
+				newZone.marker.setAnimation(null);
+				newZone.stopTrackingLocation();
+			}
+			
+			// google.maps.event.addListener(newZone.myNewZone, 'mousedown', function(e){
+			// 	console.log("new zone clicked");
+			// });
+		});
 
-			//myNewZone.setOptions(fillColor: '#FF0000', fillOpacity: 0.5);
-			google.maps.event.addDomListener(myNewZone, 'mousedown', function(e){
-				console.log("new zone clicked");
-			});
-			//delete newZone.myPathObj;
+		//When 'Save' is clicked
+		$('button#track_save').on("touchstart", function(e){
+
+			newZone.saveData();
 		});
 
 		//when 'Reset' is clicked
 		$('button#track_reset').on("touchstart", function(e){
+			console.log("reset clicked");
+			//watchID is null if stop has been clicked
 			if(newZone.watchID == null){
-				newZone.myPathObj.setPath([]);
-				newZone.pathTraveled = [];
+				newZone.clearZone();
+				$('button#track_save').hide();
+				$('button#track_start').show();
+			}
+			else {
+				newZone.marker.setAnimation(null);
+				newZone.stopTrackingLocation();
+				newZone.clearZone();
+				$('button#track_stop').hide();
+				$('button#track_start').show();
 			}
 		});
 
@@ -70,52 +94,60 @@ var newZone = {
 	** called when newzone1 page is loaded
 	*/
 		
-		var myAddress;
-		if (app.userData.Address == "") 
-			myAddress = app.userData.Zip;
-		else
-			myAddress = app.userData.Address+", "+app.userData.State+" "+app.userData.Zip ;
-
-		var geocoder = new google.maps.Geocoder();
-		geocoder.geocode({"address": myAddress}, function(results){
-			var Lat = results[0].geometry.location.lat();
-			var Long = results[0].geometry.location.lng();
-			newZone.currentLocation = {"lat": Lat, "lng": Long};
-		});
-
 		navigator.geolocation.getCurrentPosition(onSuccess, onError, newZone.geoOptions);
 
 		//geolocation callback functions
 		function onSuccess(position){
-			console.log("geolocation was a success");
+			console.log("initial location was a success");
 			var Lat = position.coords.latitude;
 			var Long = position.coords.longitude;
 			newZone.currentLocation = {"lat": Lat, "lng": Long};
-
 		}
 
 		function onError(error){		
-			alert('message: ' + error.message);
+			useDefaultLocation();
 		}
-	
-		
-		
-			
+
+		//default location if geolocation fails
+		function  useDefaultLocation(){
+			console.log("using default location");
+			var myAddress;
+
+			//if user does NOT have a saved address use the ZIP
+			if (app.userData.Address == "") 
+				myAddress = app.userData.Zip;
+			else  //otherwise use full address for geocoder
+				myAddress = app.userData.Address+", "+app.userData.State+" "+app.userData.Zip ;
+
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({"address": myAddress}, function(results){
+				if(typeof results[0] == "undefined"){
+					$.getJSON(handler,{Zip:returnVal.ZipCode,Mode:"ZipToLatLon"}, function(returnVal){
+                    newZone.currentLocation = {"lat": returnVal.Lat, "lng": returnVal.Long};
+	                });
+				}
+				else {
+					var Lat = results[0].geometry.location.lat();
+					var Long = results[0].geometry.location.lng();
+					newZone.currentLocation = {"lat": Lat, "lng": Long};
+				}
+			});	
+		}		
 	},
 
 	loadMap: function(){
 	/*
-	**  loads map and shows current location
+	**  creates and/or loads map and shows current location
 	*/
 		console.log("loading map");
         
+        //if newZone.map is undefined, create a new google.maps.Map object
+        //centered at current location
         if(typeof newZone.map === "undefined")
         {
 
             var lat = newZone.currentLocation.lat;
             var lng = newZone.currentLocation.lng;
-            
-            console.log(newZone.currentLocation);
 
             var mapOptions = {
                 mapTypeId: google.maps.MapTypeId.SATELLITE,
@@ -135,7 +167,6 @@ var newZone = {
             newZone.marker = new google.maps.Marker({
                 position: new google.maps.LatLng(lat, lng),
                 map: newZone.map,
-                //animation: google.maps.Animation.BOUNCE,
                 visible: true
             });
 
@@ -143,22 +174,23 @@ var newZone = {
             newZone.pathOptions.map = newZone.map;
 
 	        //need function to get position every second and update the map with the new position and draw the line
-	        //newZone.trackLocation();
-			
+	        //newZone.startTrackingLocation();
+			newZone.isMapReady = true;
+			$('#track_start').show();
+			$('#track_reset').show();
 	        console.log("done loading");
         }
         else{
         	console.log("map defined");
-        	//newZone.trackLocation();
+        	//newZone.startTrackingLocation();
         }
 	
 	},
 
-	trackLocation: function(){
-		console.log("entering trackLocation");
+	startTrackingLocation: function(){
+		console.log("starting tracker");
 		
-		//show marker
-		newZone.marker.visible = true;
+		//show marker bouncing
 		newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
 
 		//keep track of where user has been
@@ -181,23 +213,55 @@ var newZone = {
 				newZone.map.setCenter({lat: newZone.currentLocation.lat, lng: newZone.currentLocation.lng});
 				//add new coordinate to path traveled
 				newZone.pathTraveled.push(new google.maps.LatLng(newZone.currentLocation.lat, newZone.currentLocation.lng));
-				//and draw new path
-				if(typeof newZone.myPathObj === "undefined"){
-					newZone.myPathObj = new google.maps.Polyline(newZone.pathOptions);
-					newZone.myPathObj.setPath(newZone.pathTraveled);
-					console.log("undefined myPathObj");
+				//and draw new polygon zone
+				if(typeof newZone.myNewZone == "undefined"){
+					newZone.myNewZone = new google.maps.Polygon(newZone.pathOptions);
+					newZone.myNewZone.setPath(newZone.pathTraveled);
 				}
 				else
-					newZone.myPathObj.setPath(newZone.pathTraveled);
+					newZone.myNewZone.setPath(newZone.pathTraveled);
 			}
 			console.log("Watching..."); 
-
 		}
 
 		function onError(error){
 			console.log('message: ' + error.message);
 			console.log('code: ' + error.code);
 		}
+	},
+
+	stopTrackingLocation: function(){
+		console.log("stopping tracker");
+		navigator.geolocation.clearWatch(newZone.watchID);
+		newZone.watchID = null;
+	},
+
+	saveData: function(){
+		console.log("saving data");
+
+		// if(newZone.cropName == "" || newZone.zoneName == "") {
+  //           $.alert("Sorry, something went wrong! Please try again", ":(");
+  //       }
+  //       else {
+  //           $.getJSON(handler,{Name: newZone.cropName, Crop: newZone.zoneName, Lat:center.lat(),Long:center.lng(),Border:pathList.join(";"),Mode:"CreateZone"}, function(returnVal){
+  //               if(returnVal == "Success") {
+                    
+  //               }
+  //               else {
+  //                   $.alert("Please Log In Again","Security Time Out");
+  //               }
+  //           });
+  //       }
+
+	},
+
+	traceZone: function(){
+		console.log("tracing zone");
+	},
+
+	clearZone: function(){
+		newZone.myNewZone.setPath([]);
+		//newZone.pathTraveled = [];
 	}
 }
 
