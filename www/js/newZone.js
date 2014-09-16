@@ -239,24 +239,36 @@ var newZone = {
 	saveData: function(){
 		console.log("saving data");
 
-		// if(newZone.cropName == "" || newZone.zoneName == "") {
-  //           $.alert("Sorry, something went wrong! Please try again", ":(");
-  //       }
-  //       else {
-  //           $.getJSON(handler,{Name: newZone.cropName, Crop: newZone.zoneName, Lat:center.lat(),Long:center.lng(),Border:pathList.join(";"),Mode:"CreateZone"}, function(returnVal){
-  //               if(returnVal == "Success") {
-                    
-  //               }
-  //               else {
-  //                   $.alert("Please Log In Again","Security Time Out");
-  //               }
-  //           });
-  //       }
+		//calculate center of zone and create pathList string
+		newZone.pathList = [];
+		var bounds = new google.maps.LatLngBounds();
+		$.each(newZone.pathTraveled, function(index, LatLng){
+			newZone.pathList.push([LatLng.lat(), LatLng.lng()]);
+			bounds.extend(LatLng);
+		});
+		var center = bounds.getCenter();
+
+
+		if(newZone.cropName == "" || newZone.zoneName == "") {
+            $.alert("Sorry, something went wrong! Please try again", ":(");
+        }
+        else {
+            $.getJSON(handler,{Name: newZone.cropName, Crop: newZone.zoneName, Lat:center.lat(),Long:center.lng(),Border:newZone.pathList.join(";"),Mode:"CreateZone"}, function(returnVal){
+                if(returnVal == "Success") {
+                    console.log("zone created!");
+                }
+                else {
+                    $.alert("Please Log In Again","Security Time Out");
+                    app.relogin("newZone");
+                }
+            });
+        }
 
 	},
 
 	traceZone: function(){
 		console.log("tracing zone");
+
 	},
 
 	clearZone: function(){
