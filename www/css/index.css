@@ -35,6 +35,9 @@
     height: 1px;
 }
 
+#detail {
+    -webkit-overflow-scrolling: touch;
+}
 
 .ui-btn-custom-menu {
     background-color: transparent !important;
