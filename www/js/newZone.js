@@ -51,7 +51,7 @@ var newZone = {
 				$('button#track_stop').hide();
 				$('button#track_save').show();
 				//stop bouncing marker and hide
-				newZone.marker.setAnimation(null);
+				newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
 				newZone.marker.setVisible(false);
 				//stop tracing zone and tracking location
 				newZone.startZoneTrace = false;
@@ -97,14 +97,16 @@ var newZone = {
 				$('button#track_start').show();
 				$('button#track_stop').hide();
 				newZone.infoWindow.close();
+				newZone.marker.setVisible(true);
 			}
 			else {
-				newZone.marker.setAnimation(null);
+				newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
 				newZone.stopTrackingLocation();
 				newZone.clearZone();
 				newZone.startZoneTrace = false;
 				$('button#track_stop').hide();
 				$('button#track_start').show();
+				newZone.marker.setVisible(true);
 			}
 		});
 
@@ -212,10 +214,10 @@ var newZone = {
 
 	startTrackingLocation: function(){
 		console.log("starting tracker");
-		
+		newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
 		//watch for changes in user position
 		//save watchID to stop tracking later on
-        watchID = navigator.geolocation.watchPosition(onSuccess, onError, newZone.geoOptions);
+        newZone.watchID = navigator.geolocation.watchPosition(onSuccess, onError, newZone.geoOptions);
 
         //geolocation callback functions
 		function onSuccess(position){
@@ -237,9 +239,9 @@ var newZone = {
 
 	stopTrackingLocation: function(){
 		console.log("stopping tracker");
-		if(watchID != null){
-			navigator.geolocation.clearWatch(watchID);
-			watchID = null;
+		if(newZone.watchID != null){
+			navigator.geolocation.clearWatch(newZone.watchID);
+			newZone.watchID = null;
 		}
 	},
 
@@ -277,8 +279,8 @@ var newZone = {
 	traceZone: function(position){
 		console.log("tracing zone");
 
-		//show marker bouncing
-		newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
+		//stop bouncing marker
+		newZone.marker.setAnimation(null);
 
 		//keep track of where user has been
 		if(typeof newZone.pathTraveled == "undefined")
