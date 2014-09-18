@@ -182,34 +182,32 @@ div#map_buttons {
 
 div#map_buttons button {
     border: 0px;
-    width: 40%;
+    width: 80%;
+    margin-right: 0px;
+    margin-left: 0px;
     text-shadow: 0 1px 0 #111;   
 }
 
 button#track_start {
     display: none;
-    margin-left: 0px;
     background-color: #00BB00;
     color: #FFFFFF;
 }
 
 button#track_stop {
     display: none;
-    margin-left: 0px;
     background-color: #DD0000;
     color: #FFFFFF;
 }
 
 button#track_save {
     display: none;
-    margin-left: 0px;
     background-color: #027A8F;
     color: #FFFFFF;
 }
 
 button#track_reset {
     display: none;
-    margin-right: 0px;
     background-color: #A0A0A0;
     color: #FFFFFF;
 }

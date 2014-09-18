@@ -118,13 +118,27 @@ var app = {
                     //$('#login_button').val('');
                     $('#pass').val('');
                     break;
+
                 case "newzone":
                     newZone.initialize();
+                    console.log("newZone1");
                     break;
+
                 case "newzone2":
                     console.log("resizing map");
                     newZone.loadMap();
+                    $(document).one("pagecontainertransition", function(e, ui){
+                        $(document).one("pagecontainertransition", function(e, ui){
+                            newZone.clearZone();
+                            newZone.startZoneTrace = false;
+                            if(newZone.watchID != null){
+                                navigator.geolocation.clearWatch(newZone.watchID);
+                                newZone.watchID = null;
+                            }
+                        });
+                    });
                     break;
+
                 default:
                     console.log("current page: " + app.currentPage);
                     break;
