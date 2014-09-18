@@ -34,6 +34,7 @@ var newZone = {
 				$('button#track_start').hide();
 				$('button#track_stop').show();
 				newZone.startZoneTrace = true;
+				newZone.marker.setAnimation(null);
 				newZone.marker.setVisible(true);
 			}
 			
@@ -97,16 +98,16 @@ var newZone = {
 				$('button#track_start').show();
 				$('button#track_stop').hide();
 				newZone.infoWindow.close();
-				newZone.marker.setVisible(true);
+				newZone.startTrackingLocation();
 			}
 			else {
 				newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
-				newZone.stopTrackingLocation();
+				//newZone.stopTrackingLocation();
 				newZone.clearZone();
 				newZone.startZoneTrace = false;
 				$('button#track_stop').hide();
 				$('button#track_start').show();
-				newZone.marker.setVisible(true);
+				newZone.startTrackingLocation();
 			}
 		});
 
@@ -215,6 +216,7 @@ var newZone = {
 	startTrackingLocation: function(){
 		console.log("starting tracker");
 		newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
+		newZone.marker.setVisible(true);
 		//watch for changes in user position
 		//save watchID to stop tracking later on
         newZone.watchID = navigator.geolocation.watchPosition(onSuccess, onError, newZone.geoOptions);
@@ -293,6 +295,7 @@ var newZone = {
 			newZone.currentLocation.lng = position.coords.longitude;
 			//add new coordinate to path traveled
 			newZone.pathTraveled.push(new google.maps.LatLng(newZone.currentLocation.lat, newZone.currentLocation.lng));
+			
 			//and draw new polygon zone
 			if(typeof newZone.myNewZone == "undefined"){
 				newZone.myNewZone = new google.maps.Polygon(newZone.pathOptions);
