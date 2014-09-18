@@ -95,12 +95,14 @@ input#email,#pass {
     color: #F4F4F4;
     background:#00A480;
     border: 0px;
+    text-shadow: 0 1px 0 #111;
 }
 
 #account_buttons .ui-btn {
     color: #F4F4F4;
     background:#00A480;
     border: 0px;
+    text-shadow: 0 1px 0 #111;
 }
 
 #main_content {
@@ -154,7 +156,7 @@ input#email,#pass {
     opacity: 1 !important;
     text-indent: 0px !important;
     border: 0px;
-    text-shadow: none !important;
+    text-shadow: 0 1px 0 #111 !important;
 }
 
 div#new_zone_content2 {
@@ -181,7 +183,7 @@ div#map_buttons {
 div#map_buttons button {
     border: 0px;
     width: 40%;
-    text-shadow: none !important;    
+    text-shadow: 0 1px 0 #111;   
 }
 
 button#track_start {

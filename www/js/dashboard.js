@@ -68,7 +68,7 @@ var dashboard = {
                                     custombody +
                                 "</div>" +
                             "</div>" +
-                        "</div>").on("touchstart", function(){
+                        "</div>").on("tap", function(){
                             zone.loadZoneDetails(id);                    
                         })
 			        );

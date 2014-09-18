@@ -266,8 +266,9 @@ var newZone = {
         else {
             $.getJSON(handler,{Name: newZone.cropName, Crop: newZone.zoneName, Lat:center.lat(),Long:center.lng(),Border:pathList.join(";"),Mode:"CreateZone"}, function(returnVal){
                 if(returnVal == "Success") {
-                    console.log("zone created!");
-                    $('body').pagecontainer("change", "#dashboard");
+                    var a = confirm("Zone saved! push ok to go to dashboard");
+                    if(a == true)
+	                    app.relogin("dashboard");
                 }
                 else {
                     $.alert("Please Log In Again","Security Time Out");
@@ -304,7 +305,6 @@ var newZone = {
 			else
 				newZone.myNewZone.setPath(newZone.pathTraveled);
 		}
-		console.log("Watching..."); 
 	},
 
 	clearZone: function(){
