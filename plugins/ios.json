@@ -23,6 +23,14 @@
                         {
                             "xml": "<feature name=\"Compass\"><param name=\"ios-package\" value=\"CDVCompass\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"ios-package\" value=\"CDVNotification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -38,6 +46,18 @@
                     "CoreLocation.framework": [
                         {
                             "xml": "false",
+                            "count": 1
+                        }
+                    ],
+                    "AudioToolbox.framework": [
+                        {
+                            "xml": "true",
+                            "count": 1
+                        }
+                    ],
+                    "SystemConfiguration.framework": [
+                        {
+                            "xml": "true",
                             "count": 1
                         }
                     ]
@@ -56,6 +76,12 @@
             "PACKAGE_NAME": "com.rootsystems.mobile"
         },
         "org.apache.cordova.device-orientation": {
+            "PACKAGE_NAME": "com.rootsystems.mobile"
+        },
+        "org.apache.cordova.dialogs": {
+            "PACKAGE_NAME": "com.rootsystems.mobile"
+        },
+        "org.apache.cordova.network-information": {
             "PACKAGE_NAME": "com.rootsystems.mobile"
         }
     },

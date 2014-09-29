@@ -67,6 +67,7 @@ var newZone = {
 			$('button#track_reset').hide();
 			$('button#track_start').show();
 			newZone.loadMap();
+			$('#popupInfo').remove();
 		});
 		
 		newZone.getInitialLocation();
@@ -170,7 +171,7 @@ var newZone = {
         	newZone.marker.setAnimation(google.maps.Animation.BOUNCE);
         	newZone.marker.setVisible(true);
         	newZone.map.setZoom(17);
-        	newZone.infoWindow.close();
+        	//newZone.infoWindow.close();
         	$('#track_start').show();
         	$('#track_stop').hide();
 			$('#track_reset').hide();
@@ -234,20 +235,36 @@ var newZone = {
 		});
 		var center = bounds.getCenter();
 
-		//fit map to bounds
+		//create popup info window on 'Stop' button click
+		var popupContent = "<div data-role='popup' id='popupInfo'>" +
+								"<b>"+newZone.zoneName+"</b><br>" +
+								"Crop: "+newZone.cropName+"<br>" +
+								"<button id='track_save' type='button' class='ui-btn ui-btn-inline ui-corner-all'>Save</button>" +
+							   "</div>";
+		//show pop up when map bounds are fit
+		google.maps.event.addListenerOnce(newZone.map, 'bounds_changed', function(){
+			$('#new_zone_content2').append(popupContent);
+		    $('#popupInfo').popup();
+	    	google.maps.event.trigger(newZone.myNewZone, 'mousedown');
+		});
+
+		// disable default popup events and create custom ones
+		$(document).off().one("popupafteropen", function(){
+			$('.ui-popup-screen').off()
+			$('.ui-popup-screen').addClass("ui-screen-hidden");
+			google.maps.event.addListenerOnce(newZone.map, 'click', function(){
+				console.log("clicked map!!!");
+			});
+		});					   
+
+	    //fit map to bounds
 		newZone.map.fitBounds(bounds);
 
-		//create info window on 'Stop' button click
-		var contentString = "<b>"+newZone.zoneName+"</b><br>"+
-							"Crop: "+newZone.cropName+"<br>"+
-							"<button id='track_test' type='button class='ui-btn ui-btn-inline ui-corner-all'>Save</button>"+
-							"<br>";
-		newZone.infoWindow = new google.maps.InfoWindow({content: contentString, position: center});
-		newZone.infoWindow.open(newZone.map);
-		
 		//add mousedown event for popup
 		google.maps.event.addListener(newZone.myNewZone, 'mousedown', function(e){
-			newZone.infoWindow.open(newZone.map);
+			//newZone.infoWindow.open(newZone.map);
+			console.log("open pop");
+			$('#popupInfo').popup("open");
 		});
 	},
 
@@ -316,6 +333,7 @@ var newZone = {
 
 	clearZone: function(){
 		newZone.myNewZone.setPath([]);
+		// delete newZone.myNewZone;
 		newZone.pathTraveled = [];
 	}
 }

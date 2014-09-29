@@ -25,6 +25,35 @@ $(document).on('deviceready', function(){
 var app = {
 
     initialize: function(){
+        //Check if device is offline
+        app.thisConnection = navigator.connection.type;
+        //console.log(app.connection);
+        if(navigator.connection.type == Connection.NONE){
+            console.log("no connection, initially");
+            navigator.notification.alert("Warning! No Connection", app.onOffline, "Root, Inc.", "Ok");
+        }
+        else{
+            console.log("cxn type: "+navigator.connection.type);
+        }
+
+        //if connected then loses connection
+        $(document).on("offline", function(){
+            navigator.notification.alert("Warning! Connection Lost", app.onOffline, "Root, Inc.", "Ok");
+            return false;
+        });
+        //if no connection, then connection
+        $(document).on("online", function(){
+            navigator.notification.alert("Internet Connection Successful!", app.onOnline, "Root, Inc.", "Ok");
+        });
+        
+        //handle ajax errors
+        // $(document).ajaxError(function(event, jqXHR, settings, thrownError) {
+        //     app.thisEvent = event;
+        //     app.jqXHR = jqXHR;
+        //     app.theseSettings = settings;
+        //     app.thrownError = thrownError;
+        //     navigator.notification.alert("Server Error", app.onAjaxError, "Root, Inc.", "Ok");
+        // });
 
         //prepend nav panel and try login.  only triggered once
         $(document).one("pagecontainerbeforechange", function(e, ui){
@@ -153,7 +182,23 @@ var app = {
                 console.log("login clicked");
                 var  email = $('#email').val();
                 var pass = $('#pass').val();
-                app.login(email, pass);
+                function doNothing(){
+                    //do nothing
+                }
+                if(email == "" && pass != ""){
+                    navigator.notification.alert("Please Enter Your Email", doNothing, "Root, Inc.", "Ok");
+                }
+                else if(email != "" && pass == ""){
+                    navigator.notification.alert("Please Enter a Password", doNothing, "Root, Inc.", "Ok");   
+                }
+                else if(email == "" && pass == ""){
+                    navigator.notification.alert("Please Enter Your Email and Password", doNothing, "Root, Inc.", "Ok");       
+                }
+                else{
+                    app.login(email, pass);    
+                }
+                //app.login(email, pass);    
+                
             });
         
         });   
@@ -168,14 +213,18 @@ var app = {
                 window.localStorage.setItem("Email", email);
                 window.localStorage.setItem("Password", pass);
                 //store userData on successful login
+                window.localStorage.setItem("UserDetails", returnVal);
                 app.userData = returnVal
                 //initialize account
                 account.initialize();                
                 dashboard.loadZones(app.userData["Zones"]);     
             }
             else{
-                app.logout();
+                navigator.notification.alert("Incorrect Email or Password", app.logout, "Root, Inc.", "Ok");
             }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown){
+            navigator.notification.alert("Unable to Login", app.logout, "Root, Inc.", "Ok");       
         });    
     },
     
@@ -211,6 +260,19 @@ var app = {
             app.userData = null;
         });
         
+    },
+
+    onOffline: function(){
+        console.log("Connection type: " + navigator.connection.type);
+    },
+
+    onOnline: function(){
+        console.log("Connection type: " + navigator.connection.type);
+    },
+
+    onAjaxError: function(){
+        console.log("ajax error");
+        app.logout();
     },
 
     userData: null

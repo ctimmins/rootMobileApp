@@ -6,7 +6,7 @@ var dashboard = {
         $('#dash_content').empty();
 		$.each(zones, function(index, id){
 			$.getJSON(handler, {ZID: id, onlyCurrent: true, Mode: 'GetZoneOverview'}, function(returnVal){
-                
+
                 var zone_details = returnVal,
                     status = zone_details["Status"],
                     name = zone_details["Name"],
@@ -16,7 +16,10 @@ var dashboard = {
                     Border = zone_details["Border"], 
                     Lat = zone_details["Latitude"], 
                     Long = zone_details["Longitude"];
-                    
+                
+                //cache each zone's data
+                window.localStorage.setItem("zoneData:"+id, data);
+
                 //initialize custom-body
                 var custombody = "";
 

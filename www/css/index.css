@@ -201,7 +201,6 @@ button#track_stop {
 }
 
 button#track_save {
-    display: none;
     background-color: #027A8F;
     color: #FFFFFF;
 }

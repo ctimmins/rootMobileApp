@@ -21,15 +21,17 @@ var zone = {
                 
             var mapNum = id.replace('.','');
             
-
+            console.log(data);
             //initialize custom-body
             var custombody = '<div class="row"><div class="col-md-7 col-xs-12">';
 
             //build custom body
             $.each(data, function(key, value)
             {
+                console.log("Key: "+key);
                 $.each(value, function(type, value)
                 {
+                    console.log("type: "+type);
                     if(type == "Historical")
                     {
                         var detail_type = key,

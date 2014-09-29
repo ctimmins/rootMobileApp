@@ -41,6 +41,35 @@ module.exports = [
         "clobbers": [
             "navigator.compass"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.dialogs/www/notification.js",
+        "id": "org.apache.cordova.dialogs.notification",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.dialogs/www/android/notification.js",
+        "id": "org.apache.cordova.dialogs.notification_android",
+        "merges": [
+            "navigator.notification"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.network-information/www/network.js",
+        "id": "org.apache.cordova.network-information.network",
+        "clobbers": [
+            "navigator.connection",
+            "navigator.network.connection"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.network-information/www/Connection.js",
+        "id": "org.apache.cordova.network-information.Connection",
+        "clobbers": [
+            "Connection"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -49,7 +78,9 @@ module.exports.metadata =
     "org.apache.cordova.console": "0.2.9",
     "org.apache.cordova.device": "0.2.10",
     "org.apache.cordova.device-motion": "0.2.9",
-    "org.apache.cordova.device-orientation": "0.3.8"
+    "org.apache.cordova.device-orientation": "0.3.8",
+    "org.apache.cordova.dialogs": "0.2.10",
+    "org.apache.cordova.network-information": "0.2.12"
 }
 // BOTTOM OF METADATA
 });

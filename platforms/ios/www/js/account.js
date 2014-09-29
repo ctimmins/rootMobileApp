@@ -6,13 +6,12 @@ var account = {
 		console.log("initializing account");
 		$(document).on("pagebeforecreate", "#account", function(event, ui){
 			account.renderAccount(app.userData);
-
-			$('#logout_button').on("touchstart", function(){
+			$('#logout_button').off().on("touchstart", function(){
 				console.log("account logout");
 				app.logout();
 			});
 
-			$('#saveAccountDetails').on("touchstart", function(){
+			$('#saveAccountDetails').off().on("touchstart", function(){
 				account.updateAccount();
 			});		
 		});
@@ -65,7 +64,9 @@ var account = {
 				app.userData["Irrigation System"] = $('#irrigation_method').val();
             	app.userData["Soil Type"] = $('select#soil_type').val();
                 console.log("update successful");
-                alert("Account Updated");
+                function doNothing(){};
+                navigator.notification.alert("Account Updated", doNothing, "Root, Inc.", "Ok");       
+                //alert("Account Updated");
             }
         });
 	}
