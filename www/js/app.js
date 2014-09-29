@@ -101,6 +101,11 @@ var app = {
                 account.updateAccount();
             });
 
+            //Logout if logout button is pressed
+            $('#logout_button').off().on("touchstart", function(){
+            	app.logout();
+            });
+
             //toggle account display
             $('#my_account_btn').off().on("touchstart", function(){
                 // $('#account_content').toggle();

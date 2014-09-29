@@ -12,6 +12,7 @@ var account = {
 			});
 
 			$('#saveAccountDetails').off().on("touchstart", function(){
+				console.log("acocunt update");
 				account.updateAccount();
 			});		
 		});
