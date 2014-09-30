@@ -89,12 +89,21 @@ var app = {
             };
         });
         
-        //bind panel events
+        /*  
+            --------------------------------------------------------------------
+        **  bind panel events to populate panel with account info and link buttons
+        **  to correct pages.  Whenever panel is closed, hide account info
+            --------------------------------------------------------------------
+        */
+
         $(document).on("panelbeforeopen", function(e, ui){
             //populate account details and refresh view
             account.renderAccount(app.userData);
             $('#navpanel').trigger('updatelayout');
             $(document).trigger("create");
+            //refresh the select menu display
+            console.log("refresh select");
+            $('div#account_content select').selectmenu("refresh");
 
             //save account details if save is pressed
             $('#saveAccountDetails').off().on("touchstart", function(){
@@ -103,7 +112,7 @@ var app = {
 
             //Logout if logout button is pressed
             $('#logout_button').off().on("touchstart", function(){
-            	app.logout();
+                app.logout();
             });
 
             //toggle account display
@@ -134,12 +143,18 @@ var app = {
              });
             
         });
-
-        //unbind panel events and close account details
+        
+        // hide account info window whenever panel is closed 
         $(document).on("panelbeforeclose", function(e, ui){
             $('#account_content').hide();
             $('#navpanel').trigger('updatelayout');
         });
+
+        /*  
+            --------------------------------------------------------------------
+        **  Trigger actions depending on which page is about to be shown
+            --------------------------------------------------------------------
+        */
 
         $(document).on("pagecontainerbeforeshow", function(e, ui){
             
@@ -179,7 +194,12 @@ var app = {
             }
         });
 
-        //bind login events
+        /*  
+            --------------------------------------------------------------------
+        **  Bind events for buttons on Login page.  'pagebeforecreate' is only
+        **  triggered once in the app.
+            --------------------------------------------------------------------
+        */
         $(document).on('pagebeforecreate', '#login', function(event, ui){
             console.log("creating login page");
 
@@ -229,7 +249,7 @@ var app = {
             }
         })
         .fail(function(jqXHR, textStatus, errorThrown){
-            navigator.notification.alert("Unable to Login", app.logout, "Root, Inc.", "Ok");       
+            navigator.notification.alert("Error Connecting to Server", function doNothing(){}, "Root, Inc.", "Ok");       
         });    
     },
     
@@ -256,7 +276,7 @@ var app = {
 
     logout: function(){
         $.getJSON(handler,{Mode: 'Logout'}, function(returnVal)
-        {
+        {   
             $('body').pagecontainer("change", "#login");
             console.log("logging out");
             //clear user credentials
@@ -265,7 +285,12 @@ var app = {
             app.userData = null;
         })
         .fail(function(jqXHR, textStatus, errorThrown){
-            navigator.notification.alert("Unable to Logout", function doNothing(){}, "Root, Inc.", "Ok");       
+            navigator.notification.alert(
+                "Unable to Logout", 
+                function doNothing(){},
+                "Root, Inc.",
+                "Ok"
+            );       
         });
         
     },
