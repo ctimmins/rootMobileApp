@@ -263,16 +263,32 @@ var app = {
             window.localStorage.clear();
             //show login screen
             app.userData = null;
+        })
+        .fail(function(jqXHR, textStatus, errorThrown){
+            navigator.notification.alert("Unable to Logout", function doNothing(){}, "Root, Inc.", "Ok");       
         });
         
     },
 
     onOffline: function(){
         console.log("Connection type: " + navigator.connection.type);
+        app.thisConnection = navigator.connection.type;
+        //disable adding a new Zone
+        $('button#new_zone_btn').addClass('ui-disabled');
+        //disable account saving
+        $('input#saveAccountDetails').button();
+        $('input#saveAccountDetails').button('disable');
+        $(document).trigger("pagecreate");
     },
 
     onOnline: function(){
         console.log("Connection type: " + navigator.connection.type);
+        app.relogin('dashboard');
+        //enable adding a new zone and updating account details
+        $('button#new_zone_btn').removeClass('ui-disabled');
+        $('input#saveAccountDetails').button();
+        $('input#saveAccountDetails').button('enable');
+        $(document).trigger("pagecreate");
     },
 
     onAjaxError: function(){

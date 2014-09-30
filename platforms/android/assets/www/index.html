@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.3.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>rooT Mobile</title>
+    </head>
+    <body style="background-color:#334a61;">
+    
+        <div id='splash' style="height:10000px;">
+            <div style="text-align:center;maring-top:50px;font-size:3em">root</div>
+        </div>
+        
+        <div data-role="page" id="main">
+
+        </div>
+        <!-- ____________Login Page ____________ -->
+        <div data-role="page" id="login" class="content_background" data-transition="slide">
+
+            <div id="main_content" data-role="main" class="ui-content" data-theme="a">
+
+                <input type="text" name="email" id="email" value="" placeholder="Email" data-clear-btn="true">
+                <input type="password" name="pass" id="pass" value="" placeholder="Password" data-clear-btn="true"/>
+                <div id="login_buttons">
+                    <input type="submit" id="login_button" value="Login" data-inline="true"/>
+                    <input type="submit" id="new_user_button" value="New User" data-inline="true"/>
+                </div>
+            </div>
+
+        </div>
+        
+        <!-- ____________Dashboard Page ____________ -->
+        <div data-role="page" id="dashboard" class="content_background" data-transition="slide">
+    
+            <div data-role="header" data-position="fixed" data-theme="b">
+                <a id="refreshDashboard" class="ui-btn-left ui-btn-custom-menu"><i class="fa fa-refresh"></i></a>
+                <a href="#navpanel" class="ui-btn-custom-menu ui-btn-right"><i class="fa fa-bars"></i></a>
+                <h1>Dashboard</h1>
+            </div>
+
+            <div id="dash_content" data-role="main" class="ui-content" data-theme="a">
+            </div>
+
+        </div>
+        
+        <!-- ____________Zone Details Page ____________ -->
+        <div data-role="page" id="detail" class="content_background" data-transition="slide">
+    
+            <div data-role="header" data-position="fixed" data-theme="b">
+                <a href="javascript:history.back(1) " class="ui-btn-custom-menu ui-btn-left"><i class="fa fa-chevron-left"></i></a>
+                <a href="#navpanel" class="ui-btn-custom-menu ui-btn-right"><i class="fa fa-bars"></i></a>
+                <h1 id="detail_title">Details</h1>
+            </div>
+
+            <div id="details_content" data-role="main" class="ui-content" data-theme="a">
+            </div>
+
+        </div>
+        
+        <!-- ____________New Zone Page ____________ -->
+        <div data-role="page" id="newzone" class="content_background" data-transition="slide">
+    
+            <div data-role="header" data-position="fixed" data-theme="b">
+                <a href="javascript:history.back(1) " class="ui-btn-custom-menu ui-btn-left"><i class="fa fa-chevron-left"></i></a>
+                <a href="#navpanel" class="ui-btn-custom-menu ui-btn-right"><i class="fa fa-bars"></i></a>
+                <h1 id="new_zone_title">Add New Zone</h1>
+            </div>
+
+            <div id="new_zone_content" data-role="main" class="ui-content" data-theme="a">
+
+                <div class="ui-field-contain">
+                    <h2>Create A New Zone</h2>
+                    <input type="text" name="zone_name" id="zone_name" value="" placeholder="Enter Zone Name" data-clear-btn="true">
+                    <input type="text" name="crop_name" id="crop_name" value="" placeholder="Enter a Crop" data-clear-btn="true">
+                    <a href="#newzone2" id="new_zone_next_button" class="ui-btn ui-corner-all root-btn">Next</a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ____________New Zone Page 2____________ -->
+        <div data-role="page" id="newzone2" class="content_background" data-transition="slideup">
+        
+            <div data-role="header" data-position="fixed" data-theme="b">
+                <a href="javascript:history.back(1) " id="back_button" class="ui-btn-custom-menu ui-btn-left"><i class="fa fa-chevron-left"></i></a>
+                <a href="#navpanel" class="ui-btn-custom-menu ui-btn-right"><i class="fa fa-bars"></i></a>
+                <h1 id="new_zone_title">Add New Zone</h1>
+            </div>
+
+            <div id="new_zone_content2" data-role="main" class="ui-content" data-theme="a">            
+                <div id="map_canvas"></div>                
+                <div id="map_buttons" class="map-btn">
+                    <button id="track_start"type="button" class="ui-btn ui-btn-inline ui-corner-all">Start</button>
+                    <button id="track_stop" type="button" class="ui-btn ui-btn-inline ui-corner-all">Stop</button>
+                    <button id="track_reset" type="button" class="ui-btn ui-btn-inline ui-corner-all">Reset</button>
+                </div> 
+            </div>            
+
+        </div>
+
+
+        <script type="text/javascript" src="js/lib/jquery/jquery-1.10.1.js"></script>
+        <script type="text/javascript" src="js/lib/bootstrap.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/account.js"></script>
+        <script type="text/javascript" src="js/dashboard.js"></script>
+        <script type="text/javascript" src="js/zone.js"></script>
+        <script type="text/javascript" src="js/map.js"></script>
+        <script type="text/javascript" src="js/newZone.js"></script>
+
+    </body>
+</html>

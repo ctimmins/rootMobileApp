@@ -69,6 +69,9 @@ var account = {
                 navigator.notification.alert("Account Updated", doNothing, "Root, Inc.", "Ok");       
                 //alert("Account Updated");
             }
+        })
+		.fail(function(jqXHR, textStatus, errorThrown){
+		            navigator.notification.alert("Unable to Save Account", app.logout, "Root, Inc.", "Ok");       
         });
 	}
 }
