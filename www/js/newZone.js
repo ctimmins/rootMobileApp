@@ -17,7 +17,7 @@ var newZone = {
 
 	initialize: function(){
 		
-
+		
 		//when 'Next' is clicked
 		$('#new_zone_next_button').off().on("touchstart", function(e){
 			newZone.zoneName = $('#zone_name').val();
@@ -235,27 +235,29 @@ var newZone = {
 		});
 		var center = bounds.getCenter();
 
+		google.maps.event.clearInstanceListeners(newZone.myNewZone);
 		//create popup info window on 'Stop' button click
-		var popupContent = "<div data-role='popup' id='popupInfo'>" +
-								"<b>"+newZone.zoneName+"</b><br>" +
-								"Crop: "+newZone.cropName+"<br>" +
-								"<button id='track_save' type='button' class='ui-btn ui-btn-inline ui-corner-all'>Save</button>" +
-							   "</div>";
+		// var popupContent = "<div data-role='popup' id='popupInfo'>" +
+		// 						"<b>"+newZone.zoneName+"</b><br>" +
+		// 						"Crop: "+newZone.cropName+"<br>" +
+		// 						"<button id='track_save' type='button' class='ui-btn ui-btn-inline ui-corner-all'>Save</button>" +
+		// 					   "</div>";
 		//show pop up when map bounds are fit
 		google.maps.event.addListenerOnce(newZone.map, 'bounds_changed', function(){
-			$('#new_zone_content2').append(popupContent);
-		    $('#popupInfo').popup();
-	    	google.maps.event.trigger(newZone.myNewZone, 'mousedown');
+			// $('#new_zone_content2').append(popupContent);
+		 //    $('#popupInfo').popup();
+	  //   	google.maps.event.trigger(newZone.myNewZone, 'mousedown');
+	    	console.log("bounds changed");
 		});
 
 		// disable default popup events and create custom ones
-		$(document).off().one("popupafteropen", function(){
-			$('.ui-popup-screen').off();
-			$('.ui-popup-screen').addClass("ui-screen-hidden");
-			google.maps.event.addListenerOnce(newZone.map, 'click', function(){
-				console.log("clicked map!!!");
-			});
-		});					   
+		// $(document).off().one("popupafteropen", function(){
+		// 	$('.ui-popup-screen').off();
+		// 	$('.ui-popup-screen').addClass("ui-screen-hidden");
+		// 	google.maps.event.addListenerOnce(newZone.map, 'click', function(){
+		// 		console.log("clicked map!!!");
+		// 	});
+		// });					   
 
 	    //fit map to bounds
 		newZone.map.fitBounds(bounds);
@@ -263,8 +265,23 @@ var newZone = {
 		//add mousedown event for popup
 		google.maps.event.addListener(newZone.myNewZone, 'mousedown', function(e){
 			//newZone.infoWindow.open(newZone.map);
-			console.log("open pop");
-			$('#popupInfo').popup("open");
+			// console.log("open pop");
+			// $('#popupInfo').popup("open");
+			function saveConfirm(index){
+				if(index == 1){
+					newZone.saveData();
+					//console.log("going to save new zone");
+				}
+				else{
+					//google.maps.event.clearInstanceListeners(newZone.myNewZone);
+				}
+			}
+			navigator.notification.confirm(
+				"Save New Zone?",
+				saveConfirm,
+				"Root, Inc.",
+				["Ok", "Cancel"]
+			);
 		});
 	},
 
@@ -287,15 +304,30 @@ var newZone = {
         else {
             $.getJSON(handler,{Name: newZone.cropName, Crop: newZone.zoneName, Lat:center.lat(),Long:center.lng(),Border:pathList.join(";"),Mode:"CreateZone"}, function(returnVal){
                 if(returnVal == "Success") {
-                    var a = confirm("Zone saved! push ok to go to dashboard");
-                    if(a == true)
-	                    app.relogin("dashboard");
+                	function confirmReturn(){
+                		app.relogin("dashboard");
+                	}
+                    navigator.notification.alert(
+                    	"Zone saved! push Ok to go to dashboard",
+                    	confirmReturn,
+                    	"Root, Inc.",
+                    	"Ok"
+                	);
+                    
+	                    
                 }
                 else {
-                    $.alert("Please Log In Again","Security Time Out");
-                    app.relogin("newZone");
+                    navigator.notification.alert(
+                    	"Please Log In Again, Security Time Out",
+                    	app.relogin("newZone"),
+                    	"Root, Inc.",
+                    	"Ok"
+                	);
                 }
-            });
+            })
+            .fail(function(jqXHR, textStatus, errorThrown){
+            navigator.notification.alert("Error Connecting to Server", function doNothing(){}, "Root, Inc.", "Ok");       
+	        });
         }
 
 	},
@@ -332,6 +364,7 @@ var newZone = {
 	},
 
 	clearZone: function(){
+		console.log("clearing zone");
 		newZone.myNewZone.setPath([]);
 		// delete newZone.myNewZone;
 		newZone.pathTraveled = [];

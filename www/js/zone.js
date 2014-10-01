@@ -96,8 +96,9 @@ var zone = {
                     ["Ok", "Cancel"]
                 );
             });
-
+            // $('[data-role=header]').toolbar("updatePagePadding");
             $('#details').trigger('create');
+            // $(document).trigger('create');
         });
     },
 

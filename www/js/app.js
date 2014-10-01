@@ -176,7 +176,7 @@ var app = {
         $(document).on("pagecontainerbeforeshow", function(e, ui){
             
             app.currentPage = ui.toPage.attr('id');
-            
+
             switch(app.currentPage){
                 case "login":
                     //clear user credentials
@@ -187,6 +187,18 @@ var app = {
                     break;
 
                 case "newzone":
+                    //Disable 'Next' if name and crop are empty
+                    if($('#zone_name').val() == "" || $('#crop_name').val() == ""){
+                        $('a#new_zone_next_button').addClass('ui-disabled');
+                    }
+                    else{
+                        $('a#new_zone_next_button').removeClass('ui-disabled');  
+                    }
+                    $('div#newzone input[type=text]').off().keypress(function(){
+                        if($('#zone_name').val() != "" && $('#crop_name').val() != ""){
+                            $('a#new_zone_next_button').removeClass('ui-disabled');
+                        }
+                    });
                     newZone.initialize();
                     console.log("newZone1");
                     break;
@@ -196,6 +208,7 @@ var app = {
                     newZone.loadMap();
                     $(document).one("pagecontainertransition", function(e, ui){
                         $(document).one("pagecontainertransition", function(e, ui){
+                            console.log("yooo");
                             newZone.clearZone();
                             newZone.startZoneTrace = false;
                             if(newZone.watchID != null){
