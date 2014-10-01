@@ -189,14 +189,21 @@ var app = {
                 case "newzone":
                     //Disable 'Next' if name and crop are empty
                     if($('#zone_name').val() == "" || $('#crop_name').val() == ""){
-                        $('a#new_zone_next_button').addClass('ui-disabled');
+                        $('a#new_zone_next_button').addClass('ui-disabled')
+                        .css("opacity",'.2 !important');
                     }
                     else{
-                        $('a#new_zone_next_button').removeClass('ui-disabled');  
+                        $('a#new_zone_next_button').removeClass('ui-disabled')
+                        .css("opacity", '1 !important');  
                     }
-                    $('div#newzone input[type=text]').off().keypress(function(){
+                    $('div#newzone input[type=text]').off().keyup(function(){
                         if($('#zone_name').val() != "" && $('#crop_name').val() != ""){
-                            $('a#new_zone_next_button').removeClass('ui-disabled');
+                            $('a#new_zone_next_button').removeClass('ui-disabled')
+                            .css("opacity", '1 !important');
+                        }
+                        else{
+                            $('a#new_zone_next_button').addClass('ui-disabled')
+                            .css("opacity",'.2 !important');
                         }
                     });
                     newZone.initialize();
