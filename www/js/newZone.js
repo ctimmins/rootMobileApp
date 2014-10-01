@@ -250,7 +250,7 @@ var newZone = {
 
 		// disable default popup events and create custom ones
 		$(document).off().one("popupafteropen", function(){
-			$('.ui-popup-screen').off()
+			$('.ui-popup-screen').off();
 			$('.ui-popup-screen').addClass("ui-screen-hidden");
 			google.maps.event.addListenerOnce(newZone.map, 'click', function(){
 				console.log("clicked map!!!");

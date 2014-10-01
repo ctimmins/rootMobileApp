@@ -67,7 +67,9 @@ var zone = {
                 });
             });
 
-            // close custom body div (remove one of the closing divs when thumbnail becomes active)
+            // add delete button and close custom body div (remove one of the closing divs when thumbnail becomes active)
+            var deleteZoneBtn = "<button id='deleteZoneBtn' type='button' class='ui-btn ui-btn-inline ui-corner-all'>Delete Zone</button>"
+            custombody+= deleteZoneBtn;
             custombody+='</div>';
 
             //build panel
@@ -78,7 +80,49 @@ var zone = {
             
             $("#detail_title").text(name + " | " + crop);
             $("#details_content").append(zonepanel);
+
+            //attach handler for deleteZoneBtn
+            $('button#deleteZoneBtn').off().on("touchstart", function(e){
+                console.log("delete zone");
+                function deleteConfirm(index){
+                    if(index == 1){
+                        zone.deleteZone(id)
+                    }
+                }
+                navigator.notification.confirm(
+                    "Are You Sure You Want To Delete This Zone?",
+                    deleteConfirm,
+                    "Root, Inc.",
+                    ["Ok", "Cancel"]
+                );
+            });
+
             $('#details').trigger('create');
+        });
+    },
+
+    deleteZone: function(zid){
+        //getJSON delete zone on success relogin and change to dashboard
+        $.getJSON(handler, {ZID: zid, Mode: "DeleteZone"}, function(returnVal){
+            if (returnVal == "Success"){
+                navigator.notification.alert(
+                    "Zone Successfully Deleted",
+                    app.relogin("dashboard"),
+                    "Root, Inc.",
+                    "Ok"
+                );
+            }
+            else{
+                navigator.notification.alert(
+                    "Zone Could Not Be Deleted",
+                    function doNothing(){},
+                    "Root, Inc.",
+                    "Ok"
+                );
+            }
+        })
+        .fail(function(jqXHR, textStatus, errorThrown){
+            navigator.notification.alert("Error Connecting to Server", function doNothing(){}, "Root, Inc.", "Ok");       
         });
     }
 };

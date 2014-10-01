@@ -25,6 +25,16 @@ $(document).on('deviceready', function(){
 var app = {
 
     initialize: function(){
+
+        /*  
+            --------------------------------------------------------------------
+        **  Check device network status and bind handlers to:
+        **    1. No initial connection when trying to login
+        **    2. Device loses connection after being connected
+        **    3. Device gains connection after losing it
+            --------------------------------------------------------------------
+        */
+
         //Check if device is offline
         app.thisConnection = navigator.connection.type;
         //console.log(app.connection);
@@ -54,6 +64,15 @@ var app = {
         //     app.thrownError = thrownError;
         //     navigator.notification.alert("Server Error", app.onAjaxError, "Root, Inc.", "Ok");
         // });
+        
+        /*  
+            --------------------------------------------------------------------
+        **  Load google maps API in script.  When done loading, prepend navpanel
+        **  to page container so that it is available for every subsequent page 
+        **  change/load.  Then attempt to auto login if email and password are
+        **  stored locally.
+            --------------------------------------------------------------------
+        */
 
         //prepend nav panel and try login.  only triggered once
         $(document).one("pagecontainerbeforechange", function(e, ui){
@@ -83,9 +102,8 @@ var app = {
                 else{
                     app.logout();
                 }
-
+                //prevent two page changes due to event bubbling
                 e.preventDefault();
-                console.log(app.userData);
             };
         });
         
@@ -101,8 +119,8 @@ var app = {
             account.renderAccount(app.userData);
             $('#navpanel').trigger('updatelayout');
             $(document).trigger("create");
+
             //refresh the select menu display
-            console.log("refresh select");
             $('div#account_content select').selectmenu("refresh");
 
             //save account details if save is pressed
@@ -117,7 +135,6 @@ var app = {
 
             //toggle account display
             $('#my_account_btn').off().on("touchstart", function(){
-                // $('#account_content').toggle();
                 if($('#account_content').is(':hidden'))
                     $('#account_content').slideDown(400);
                 else
@@ -159,6 +176,7 @@ var app = {
         $(document).on("pagecontainerbeforeshow", function(e, ui){
             
             app.currentPage = ui.toPage.attr('id');
+            
             switch(app.currentPage){
                 case "login":
                     //clear user credentials

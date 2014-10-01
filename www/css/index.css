@@ -44,7 +44,7 @@
     border-width: 0px;
 }
 
-..ui-btn-custom-menu:hover {
+.ui-btn-custom-menu:hover {
     color: #223F52 !important;
 }
 
@@ -209,4 +209,14 @@ button#track_reset {
     display: none;
     background-color: #A0A0A0;
     color: #FFFFFF;
+}
+
+button#deleteZoneBtn {
+    background-color: #DD0000;
+    color: #FFFFFF;
+    border: 0px;
+    width: 100%;
+    margin-right: 0px;
+    margin-left: 0px;
+    text-shadow: 0 1px 0 #111;
 }
